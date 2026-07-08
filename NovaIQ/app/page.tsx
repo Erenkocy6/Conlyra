@@ -1,3 +1,4 @@
+import { ConlyraDirectorShell } from "@/components/ConlyraDirectorShell";
 import { ConlyraPremierExperience } from "@/components/ConlyraPremierExperience";
 
 const siteUrl = "https://conlyra.ai";
@@ -200,6 +201,7 @@ const pageSchema = {
 export default function Home() {
   return (
     <>
+      <ConlyraDirectorShell />
       <ConlyraPremierExperience />
       <script
         type="application/ld+json"
