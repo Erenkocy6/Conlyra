@@ -20,9 +20,7 @@ const softwareSchema = {
     priceCurrency: "EUR",
     description: "CONLYRA Workflow-Beratung anfragen.",
   },
-  provider: {
-    "@id": `${siteUrl}/#organization`,
-  },
+  provider: { "@id": `${siteUrl}/#organization` },
 };
 
 const organizationSchema = {
@@ -49,6 +47,9 @@ const organizationSchema = {
     "Enterprise AI Systems",
     "Datenintelligenz",
     "Prozessautomatisierung",
+    "AI Readiness",
+    "AI Integrationen",
+    "AI Governance",
   ],
 };
 
@@ -60,9 +61,7 @@ const websiteSchema = {
   inLanguage: "de-DE",
   description:
     "CONLYRA ist eine premium AI-SaaS-Plattform fuer individuelle AI-Workflows, Agentenautomatisierung und intelligente Systeminfrastruktur.",
-  publisher: {
-    "@id": `${siteUrl}/#organization`,
-  },
+  publisher: { "@id": `${siteUrl}/#organization` },
 };
 
 const webPageSchema = {
@@ -72,20 +71,37 @@ const webPageSchema = {
   name: "CONLYRA - AI-Agenten und KI-Automatisierung fuer Unternehmen",
   headline: "AI-Agenten und kontrollierte Workflow-Systeme fuer Unternehmen",
   inLanguage: "de-DE",
-  isPartOf: {
-    "@id": `${siteUrl}/#website`,
-  },
-  about: {
-    "@id": `${siteUrl}/#organization`,
-  },
+  isPartOf: { "@id": `${siteUrl}/#website` },
+  about: { "@id": `${siteUrl}/#organization` },
   audience: {
     "@type": "BusinessAudience",
     audienceType: "Unternehmen, Teams und Entscheider fuer KI-Automatisierung",
   },
   mainEntity: [
     { "@id": `${siteUrl}/#services` },
+    { "@id": `${siteUrl}/#product-system` },
     { "@id": `${siteUrl}/#faq` },
   ],
+};
+
+const productSystemSchema = {
+  "@type": "ItemList",
+  "@id": `${siteUrl}/#product-system`,
+  name: "CONLYRA Product System",
+  itemListElement: [
+    ["AI Agents", "/ai-agenten"],
+    ["Workflow Automation", "/workflow-automatisierung"],
+    ["Private Intelligence", "/private-intelligence"],
+    ["Voice AI", "/voice-ai"],
+    ["AI Readiness", "/ai-strategy"],
+    ["Integrations", "/integrationen"],
+    ["Control Layer", "/governance-security"],
+  ].map(([name, path], index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name,
+    url: `${siteUrl}${path}`,
+  })),
 };
 
 const serviceCatalogSchema = {
@@ -194,6 +210,7 @@ const pageSchema = {
     websiteSchema,
     webPageSchema,
     softwareSchema,
+    productSystemSchema,
     serviceCatalogSchema,
     faqSchema,
     breadcrumbSchema,
