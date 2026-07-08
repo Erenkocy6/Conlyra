@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Poppins } from "next/font/google";
 import { ConlyraMegaFooter } from "@/components/ConlyraMegaFooter";
+import { ConlyraRouteBoundary } from "@/components/ConlyraRouteBoundary";
 import { ConlyraScrollDirector } from "@/components/ConlyraScrollDirector";
 import "./globals.css";
 import "./director-patch.css";
@@ -125,6 +126,7 @@ export default function RootLayout({
           Zum Inhalt springen
         </a>
         {children}
+        <ConlyraRouteBoundary />
         <ConlyraScrollDirector />
         <ConlyraMegaFooter />
       </body>
