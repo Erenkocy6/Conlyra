@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import styles from "./ConlyraDirectorShell.module.css";
 
@@ -10,13 +11,14 @@ const manifestoWords =
 
 const heroCapabilities = [
   ["01", "AI Strategy", "#system"],
-  ["02", "Custom Agents", "#system"],
+  ["02", "Custom Agents", "/ai-agenten"],
   ["03", "Workflow Systems", "#use-cases"],
   ["04", "Private Intelligence", "#trust"],
 ] as const;
 
 const quickLinks = [
   ["Home", "#director-top"],
+  ["AI-Agenten", "/ai-agenten"],
   ["System", "#system"],
   ["Anwendungen", "#use-cases"],
   ["Wirkung", "#impact"],
@@ -39,6 +41,7 @@ const hoverReels = [
     title: "Potenzial wird zur Roadmap.",
     meta: "Audit / Priorisierung / Governance",
     video: "/media/AdobeStock_444039087.mp4",
+    href: "#system",
   },
   {
     no: "02",
@@ -46,6 +49,7 @@ const hoverReels = [
     title: "Agenten mit Rolle, Kontext und Grenzen.",
     meta: "Memory / Tools / Human Gates",
     video: "/media/AdobeStock_517331471.mp4",
+    href: "/ai-agenten",
   },
   {
     no: "03",
@@ -53,6 +57,7 @@ const hoverReels = [
     title: "Arbeit bewegt sich durch ein System.",
     meta: "Routing / Actions / Audit Trail",
     video: "/media/AdobeStock_1558014909.mp4",
+    href: "#use-cases",
   },
   {
     no: "04",
@@ -60,6 +65,7 @@ const hoverReels = [
     title: "Unternehmenswissen wird ausführbar.",
     meta: "Search / RAG / Private Context",
     video: "/media/AdobeStock_1525614966.mp4",
+    href: "#trust",
   },
 ] as const;
 
@@ -225,18 +231,18 @@ export function ConlyraDirectorShell() {
               <nav aria-label="Quick Links">
                 <small>QUICK LINKS</small>
                 {quickLinks.map(([label, href]) => (
-                  <a href={href} key={label} onClick={closeMenuAndNavigate}>
+                  <Link href={href} key={label} onClick={closeMenuAndNavigate}>
                     <span>{label}</span><Arrow />
-                  </a>
+                  </Link>
                 ))}
               </nav>
 
               <nav aria-label="System Links">
                 <small>SYSTEM LINKS</small>
                 {systemLinks.map(([label, href]) => (
-                  <a href={href} key={label} onClick={closeMenuAndNavigate}>
+                  <Link href={href} key={label} onClick={closeMenuAndNavigate}>
                     <span>{label}</span><Arrow />
-                  </a>
+                  </Link>
                 ))}
               </nav>
             </div>
@@ -247,20 +253,20 @@ export function ConlyraDirectorShell() {
             </div>
           </div>
 
-          <a className={styles.menuVideoPanel} href="#system" onClick={closeMenuAndNavigate}>
+          <Link className={styles.menuVideoPanel} href="/ai-agenten" onClick={closeMenuAndNavigate}>
             <video autoPlay loop muted playsInline preload="metadata" aria-hidden="true">
               <source src="/media/AdobeStock_517331471.mp4" type="video/mp4" />
             </video>
             <div className={styles.menuVideoShade} aria-hidden="true" />
             <div className={styles.menuVideoTopline}>
               <span>CONLYRA SYSTEMS</span>
-              <strong>CORE INFRASTRUCTURE</strong>
+              <strong>AI AGENT SYSTEMS</strong>
             </div>
             <div className={styles.menuVideoFooter}>
-              <div><i>▶</i><span>SYSTEM OVERVIEW</span><strong>00:18</strong></div>
-              <div><span>VIDEO ABSPIELEN</span><Arrow /></div>
+              <div><i>▶</i><span>PRODUCT CHAPTER</span><strong>ROLE / CONTEXT / CONTROL</strong></div>
+              <div><span>AI-AGENTEN ÖFFNEN</span><Arrow /></div>
             </div>
-          </a>
+          </Link>
         </section>
       </div>
 
@@ -291,11 +297,11 @@ export function ConlyraDirectorShell() {
 
           <nav className={styles.heroCapabilities} aria-label="CONLYRA Leistungen">
             {heroCapabilities.map(([no, label, href]) => (
-              <a href={href} key={no}>
+              <Link href={href} key={no}>
                 <small>{no}</small>
                 <i />
                 <span>{label}</span>
-              </a>
+              </Link>
             ))}
           </nav>
         </div>
@@ -348,8 +354,8 @@ export function ConlyraDirectorShell() {
 
         <div className={styles.hoverReelRows}>
           {hoverReels.map((item, index) => (
-            <a
-              href="#system"
+            <Link
+              href={item.href}
               className={index === activeReel ? styles.reelActive : ""}
               key={item.no}
               onPointerEnter={() => {
@@ -365,7 +371,7 @@ export function ConlyraDirectorShell() {
               <div><strong>{item.label}</strong><span>{item.meta}</span></div>
               <h3>{item.title}</h3>
               <Arrow />
-            </a>
+            </Link>
           ))}
         </div>
 
