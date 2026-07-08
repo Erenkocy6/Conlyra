@@ -5,7 +5,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import styles from "./ConlyraSystemMap.module.css";
 
 type Product = { code:string; name:string; label:string; href:string; command:string; stack:string; description:string; question:string; signal:string; position:{ x:number; y:number } };
-
 const products: Product[] = [
   { code:"01", name:"AI Agents", label:"EXECUTION", href:"/ai-agenten", command:"EXPLORE AI AGENTS", stack:"ROLE / CONTEXT / TOOLS / CONTROL", description:"Rollenbasierte AI-Systeme, die Kontext verstehen, Werkzeuge nutzen und kontrolliert handeln.", question:"WER ARBEITET?", signal:"AGENT SYSTEM READY", position:{ x:15,y:21 } },
   { code:"02", name:"Workflow Automation", label:"ORCHESTRATION", href:"/workflow-automatisierung", command:"OPEN FLOW ENGINE", stack:"SIGNAL / LOGIC / ACTION / TRACE", description:"Operative Abläufe, Signale und Aktionen als kontrollierte, nachvollziehbare Systemflüsse.", question:"WIE LÄUFT ARBEIT?", signal:"FLOW ENGINE READY", position:{ x:15,y:74 } },
@@ -15,7 +14,6 @@ const products: Product[] = [
   { code:"06", name:"Integrations", label:"CONNECTIONS", href:"/integrationen", command:"OPEN OPERATING STACK", stack:"CONNECT / READ / WRITE / TRIGGER / TRACE", description:"CRM, ERP, Kommunikation und Datenquellen als kontrollierter Operating Stack verbinden.", question:"WOMIT ARBEITET DAS SYSTEM?", signal:"OPERATING STACK ONLINE", position:{ x:85,y:74 } },
   { code:"07", name:"Control Layer", label:"GOVERNANCE", href:"/governance-security", command:"OPEN CONTROL ROOM", stack:"IDENTITY / SCOPE / POLICY / APPROVAL / TRACE", description:"Identitäten, Rechte, Freigaben, Risiken und Traceability für kontrollierte AI-Ausführung.", question:"WAS DARF DAS SYSTEM?", signal:"CONTROL LAYER ENFORCING", position:{ x:50,y:88 } },
 ];
-
 const pathSequence = ["05","03","01","02","06","04","07"] as const;
 
 export function ConlyraSystemMap() {
@@ -77,7 +75,7 @@ export function ConlyraSystemMap() {
           <aside className={styles.previewPanel}>
             <header><span>ACTIVE PRODUCT WORLD</span><strong>{active.code} / 07</strong></header>
             <div className={styles.previewCore} key={active.code}><small>{active.label}</small><h3>{active.name}</h3><p>{active.description}</p><div className={styles.questionBlock}><span>SYSTEM QUESTION</span><strong>{active.question}</strong></div><div className={styles.stackBlock}><span>PRODUCT STACK</span><strong>{active.stack}</strong></div></div>
-            <div className={styles.sequence}><span>SYSTEM ARC</span><div>{pathSequence.map((code,index) => <button key={code} type="button" data-active={activePathIndex===index} onClick={() => setActiveIndex(products.findIndex((product) => product.code===code))} aria-label={`Product ${code} auswählen`}>{code}</button>)}</div></div>
+            <div className={styles.sequence}><span>SYSTEM ARC / STRATEGY TO CONTROL</span><div>{pathSequence.map((code,index) => <button key={code} type="button" data-active={activePathIndex===index} onClick={() => setActiveIndex(products.findIndex((product) => product.code===code))} aria-label={`Product ${code} auswählen`}>{code}</button>)}</div></div>
             <Link href={active.href} className={styles.openProduct}><span>{active.command}</span><b>OPEN PRODUCT ↗</b></Link>
           </aside>
         </div>
