@@ -10,6 +10,7 @@ const quickLinks = [
   ["Workflow-Automatisierung", "/workflow-automatisierung"],
   ["Private Intelligence", "/private-intelligence"],
   ["Voice AI", "/voice-ai"],
+  ["AI Readiness", "/ai-strategy"],
   ["System", "/#system"],
   ["Anwendungen", "/#use-cases"],
   ["Wirkung", "/#impact"],
@@ -19,6 +20,7 @@ const quickLinks = [
 const systemLinks = [
   ["Private Intelligence", "/private-intelligence"],
   ["Voice AI", "/voice-ai"],
+  ["AI Readiness", "/ai-strategy"],
   ["Integrationen", "/#integrations"],
   ["Workflow Audit", "/#contact"],
   ["Datenschutz", "/datenschutz"],
