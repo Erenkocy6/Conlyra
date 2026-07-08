@@ -8,6 +8,7 @@ const quickLinks = [
   ["Startseite", "/"],
   ["AI-Agenten", "/ai-agenten"],
   ["Workflow-Automatisierung", "/workflow-automatisierung"],
+  ["Private Intelligence", "/private-intelligence"],
   ["System", "/#system"],
   ["Anwendungen", "/#use-cases"],
   ["Wirkung", "/#impact"],
@@ -15,7 +16,7 @@ const quickLinks = [
 ] as const;
 
 const systemLinks = [
-  ["Private Intelligence", "/#trust"],
+  ["Private Intelligence", "/private-intelligence"],
   ["Integrationen", "/#integrations"],
   ["Workflow Audit", "/#contact"],
   ["Datenschutz", "/datenschutz"],
