@@ -72,7 +72,7 @@ export function ConlyraSystemMap() {
               {products.map((product,index) => <button key={product.code} type="button" className={styles.productNode} data-active={activeIndex===index} style={{ left:`${product.position.x}%`,top:`${product.position.y}%` }} onClick={() => setActiveIndex(index)} onMouseEnter={() => setActiveIndex(index)} aria-pressed={activeIndex===index} aria-label={`${product.name} auswählen`}><small>{product.code}</small><strong>{product.name}</strong><span>{product.label}</span><i aria-hidden="true" /></button>)}
               <div className={styles.activeSignal} key={active.code} aria-hidden="true"><span>{active.code}</span><strong>{active.signal}</strong></div>
             </div>
-            <div className={styles.mapFooter}><span>GRAPH / INTERACTIVE</span><span>ACTIVE / {active.code}</span><span>STATUS / ALL SYSTEMS ONLINE</span></div>
+            <div className={styles.mapFooter}><span>GRAPH / INTERACTIVE</span><span>ACTIVE PRODUCT / {active.code}</span><span>STATUS / ALL SYSTEMS ONLINE</span></div>
           </div>
           <aside className={styles.previewPanel}>
             <header><span>ACTIVE PRODUCT WORLD</span><strong>{active.code} / 07</strong></header>
