@@ -1,7 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Poppins } from "next/font/google";
+import { ConlyraMegaFooter } from "@/components/ConlyraMegaFooter";
+import { ConlyraScrollDirector } from "@/components/ConlyraScrollDirector";
 import "./globals.css";
 import "./director-patch.css";
+import "./experience-polish.css";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -122,6 +125,8 @@ export default function RootLayout({
           Zum Inhalt springen
         </a>
         {children}
+        <ConlyraScrollDirector />
+        <ConlyraMegaFooter />
       </body>
     </html>
   );
