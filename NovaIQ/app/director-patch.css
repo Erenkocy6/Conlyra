@@ -1,4 +1,6 @@
-#main > section[aria-labelledby="manifesto-title"] {
+#main > section[aria-labelledby="manifesto-title"],
+#main > section[aria-labelledby="shift-title"],
+#main > section[data-system-story][aria-labelledby="system-title"] {
   display: none !important;
 }
 
