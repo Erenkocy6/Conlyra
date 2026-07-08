@@ -73,6 +73,17 @@ const commands: CommandItem[] = [
     keywords: ["readiness", "strategy", "strategie", "assessment", "people", "governance", "pilot"],
   },
   {
+    code: "06",
+    title: "Integrations",
+    command: "Open Operating Stack",
+    href: "/integrationen",
+    category: "PRODUCT",
+    description: "CRM, ERP, Kommunikation, Commerce und Datenquellen über kontrollierte Read-, Write- und Trigger-Verbindungen zusammenführen.",
+    stack: "CONNECT / READ / WRITE / TRIGGER / TRACE",
+    signal: "OPERATING STACK ONLINE",
+    keywords: ["integrationen", "integrations", "stack", "crm", "erp", "api", "webhook", "read", "write", "trigger"],
+  },
+  {
     code: "S1",
     title: "System Architecture",
     command: "Explore CONLYRA System",
@@ -317,7 +328,7 @@ export function ConlyraCommandCenter() {
                   <div className={styles.emptyState}>
                     <small>NO MATCH</small>
                     <strong>No system command found.</strong>
-                    <span>Try agent, workflow, voice, readiness, private or audit.</span>
+                    <span>Try agent, workflow, voice, readiness, integrations, private or audit.</span>
                   </div>
                 )}
               </div>
