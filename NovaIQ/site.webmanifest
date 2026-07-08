@@ -1,0 +1,19 @@
+{
+  "short_name": "NovaIQ",
+  "name": "NovaIQ",
+  "icons": [
+    {
+      "src": "/brand-mark.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#050505",
+  "theme_color": "#050505"
+}
