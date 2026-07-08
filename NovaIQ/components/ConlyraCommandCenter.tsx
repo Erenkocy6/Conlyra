@@ -84,6 +84,17 @@ const commands: CommandItem[] = [
     keywords: ["integrationen", "integrations", "stack", "crm", "erp", "api", "webhook", "read", "write", "trigger"],
   },
   {
+    code: "07",
+    title: "Control Layer",
+    command: "Open Control Room",
+    href: "/governance-security",
+    category: "PRODUCT",
+    description: "Identitäten, Rechte, Risikostufen, Human Approval und Traceability für kontrollierte AI-Agenten und Workflows.",
+    stack: "IDENTITY / SCOPE / POLICY / APPROVAL / TRACE",
+    signal: "CONTROL LAYER ENFORCING",
+    keywords: ["control", "governance", "security", "policy", "permission", "approval", "risk", "trace"],
+  },
+  {
     code: "S1",
     title: "System Architecture",
     command: "Explore CONLYRA System",
@@ -328,7 +339,7 @@ export function ConlyraCommandCenter() {
                   <div className={styles.emptyState}>
                     <small>NO MATCH</small>
                     <strong>No system command found.</strong>
-                    <span>Try agent, workflow, voice, readiness, integrations, private or audit.</span>
+                    <span>Try agent, workflow, voice, readiness, integrations, control, private or audit.</span>
                   </div>
                 )}
               </div>
