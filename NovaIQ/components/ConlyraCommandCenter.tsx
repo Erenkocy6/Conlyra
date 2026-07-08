@@ -62,6 +62,17 @@ const commands: CommandItem[] = [
     keywords: ["voice", "telefon", "anruf", "call", "sprache"],
   },
   {
+    code: "05",
+    title: "AI Readiness",
+    command: "Start Readiness Scan",
+    href: "/ai-strategy",
+    category: "PRODUCT",
+    description: "Menschen, Daten, Prozesse und Governance bewerten, Chancen priorisieren und den richtigen AI-Pilot definieren.",
+    stack: "PEOPLE / DATA / PROCESS / GOVERNANCE",
+    signal: "READINESS ENGINE ONLINE",
+    keywords: ["readiness", "strategy", "strategie", "assessment", "people", "governance", "pilot"],
+  },
+  {
     code: "S1",
     title: "System Architecture",
     command: "Explore CONLYRA System",
@@ -306,7 +317,7 @@ export function ConlyraCommandCenter() {
                   <div className={styles.emptyState}>
                     <small>NO MATCH</small>
                     <strong>No system command found.</strong>
-                    <span>Try agent, workflow, voice, private or audit.</span>
+                    <span>Try agent, workflow, voice, readiness, private or audit.</span>
                   </div>
                 )}
               </div>
