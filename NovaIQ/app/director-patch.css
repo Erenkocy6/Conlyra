@@ -4,6 +4,64 @@
   display: none !important;
 }
 
+/* =========================================================
+   CONLYRA DIRECTOR GEOMETRY FIX
+   Fixes SVG scaling, short viewport overflow and hover layout.
+   ========================================================= */
+
+/* The master SVG is nearly square. Size by HEIGHT, never by width. */
+[data-conlyra-director-nav] > a:first-child {
+  width: auto !important;
+  height: 34px !important;
+  max-width: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+[data-conlyra-director-nav] > a:first-child img {
+  width: auto !important;
+  height: 34px !important;
+  max-width: none !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+/* Fullscreen menu brand: controlled icon size. */
+[data-conlyra-director-nav] + div > section:first-child > a {
+  width: auto !important;
+  height: 46px !important;
+  max-width: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+[data-conlyra-director-nav] + div > section:first-child > a img {
+  width: auto !important;
+  height: 46px !important;
+  max-width: none !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+/* Cleaner menu close control. */
+[data-conlyra-director-nav] + div > section:nth-child(2) > div:first-child > button:first-child {
+  width: 54px !important;
+  height: 54px !important;
+  top: 16px !important;
+  right: 18px !important;
+}
+
+[data-conlyra-director-nav] + div > section:nth-child(2) > div:first-child > button:first-child span {
+  width: 28px !important;
+  height: 1.5px !important;
+  box-shadow: none !important;
+}
+
+/* =========================================================
+   MANIFESTO
+   Keep the signature reveal inside short laptop viewports.
+   ========================================================= */
+
 [data-director-manifesto] {
   position: relative;
   min-height: 188svh;
@@ -21,7 +79,8 @@
   margin-inline: auto;
   display: grid;
   align-content: center;
-  padding: 100px 0 72px;
+  padding: clamp(78px, 10vh, 104px) 0 clamp(44px, 7vh, 72px);
+  overflow: hidden;
 }
 
 [data-director-manifesto] > div > p:first-child {
@@ -34,13 +93,15 @@
 }
 
 [data-director-manifesto] h2 {
-  max-width: 15ch;
-  margin: 26px 0 0;
+  width: min(100%, 16.5ch);
+  max-width: 16.5ch;
+  margin: clamp(16px, 2.6vh, 26px) 0 0;
   font-family: var(--font-poppins), Arial, sans-serif;
-  font-size: clamp(3.6rem, 6.8vw, 8rem);
-  line-height: .99;
-  letter-spacing: -.06em;
+  font-size: clamp(3rem, min(5.45vw, 9.2vh), 6.8rem);
+  line-height: .96;
+  letter-spacing: -.058em;
   font-weight: 430;
+  text-wrap: balance;
 }
 
 [data-director-word] {
@@ -55,7 +116,7 @@
 }
 
 [data-director-manifesto] > div > div {
-  margin-top: 38px;
+  margin-top: clamp(22px, 4vh, 38px);
   display: grid;
   grid-template-columns: 220px minmax(0, 520px);
   gap: 24px;
@@ -77,24 +138,104 @@
   font-weight: 500;
 }
 
+/* =========================================================
+   HOVER REEL
+   Prevent uncontrolled clipping around the floating preview.
+   ========================================================= */
+
+[data-hover-reel] > div:first-child h2 {
+  font-size: clamp(2.9rem, 5.1vw, 6.15rem) !important;
+  max-width: 10.5ch;
+  text-wrap: balance;
+}
+
+[data-hover-reel] > div:nth-child(2) > a {
+  grid-template-columns: 56px minmax(230px, .58fr) minmax(0, 1fr) 28px !important;
+  gap: clamp(14px, 1.6vw, 24px) !important;
+}
+
+[data-hover-reel] > div:nth-child(2) > a h3 {
+  min-width: 0;
+  max-width: 14ch;
+  font-size: clamp(1.7rem, 2.85vw, 3.35rem) !important;
+  line-height: .98 !important;
+  text-wrap: balance;
+  overflow-wrap: normal;
+}
+
+[data-hover-reel] > div:last-child {
+  width: min(29vw, 430px) !important;
+  max-height: min(54vh, 430px);
+}
+
+/* The hero CTA remains compact and aligned. */
+#director-top a[href="#contact"] {
+  min-width: 220px !important;
+  min-height: 48px !important;
+}
+
+@media (max-height: 780px) and (min-width: 721px) {
+  [data-director-manifesto] > div {
+    padding-top: 76px;
+    padding-bottom: 38px;
+  }
+
+  [data-director-manifesto] h2 {
+    font-size: clamp(2.9rem, min(5.1vw, 8.6vh), 5.8rem);
+    max-width: 17ch;
+  }
+
+  [data-director-manifesto] > div > div {
+    margin-top: 22px;
+    padding-top: 14px;
+  }
+}
+
+@media (max-width: 900px) {
+  [data-conlyra-director-nav] > a:first-child,
+  [data-conlyra-director-nav] > a:first-child img {
+    height: 30px !important;
+  }
+
+  [data-hover-reel] > div:nth-child(2) > a {
+    grid-template-columns: 46px minmax(170px, .6fr) minmax(0,1fr) 24px !important;
+  }
+}
+
 @media (max-width: 720px) {
+  [data-conlyra-director-nav] + div > section:first-child > a,
+  [data-conlyra-director-nav] + div > section:first-child > a img {
+    height: 38px !important;
+  }
+
   [data-director-manifesto] {
     min-height: 158svh;
   }
 
   [data-director-manifesto] > div {
     width: calc(100% - 28px);
-    padding-top: 86px;
-    padding-bottom: 54px;
+    padding-top: 82px;
+    padding-bottom: 46px;
+    overflow: hidden;
   }
 
   [data-director-manifesto] h2 {
+    width: 100%;
     max-width: 100%;
-    font-size: clamp(3rem, 12.5vw, 5rem);
+    font-size: clamp(2.8rem, 11.7vw, 4.7rem);
+    line-height: .98;
   }
 
   [data-director-manifesto] > div > div {
     grid-template-columns: 1fr;
     gap: 10px;
+  }
+
+  [data-hover-reel] > div:nth-child(2) > a {
+    grid-template-columns: 42px 1fr auto !important;
+  }
+
+  [data-hover-reel] > div:nth-child(2) > a h3 {
+    max-width: 100%;
   }
 }
