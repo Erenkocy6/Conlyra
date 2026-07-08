@@ -21,7 +21,7 @@ const systemLinks = [
   ["Voice AI", "/voice-ai"],
   ["AI Readiness", "/ai-strategy"],
   ["Integrationen", "/integrationen"],
-  ["Workflow Audit", "/#contact"],
+  ["Control Layer", "/governance-security"],
   ["Datenschutz", "/datenschutz"],
   ["Impressum", "/impressum"],
 ] as const;
