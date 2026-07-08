@@ -15,10 +15,10 @@ const products: Product[] = [
   { code:"07", name:"Control Layer", label:"GOVERNANCE", href:"/governance-security", command:"OPEN CONTROL ROOM", stack:"IDENTITY / SCOPE / POLICY / APPROVAL / TRACE", description:"Identitäten, Rechte, Freigaben, Risiken und Traceability für kontrollierte AI-Ausführung.", question:"WAS DARF DAS SYSTEM?", signal:"CONTROL LAYER ENFORCING", position:{ x:50,y:88 } },
 ];
 const pathSequence = ["05","03","01","02","06","04","07"] as const;
+const initialProductIndex = products.findIndex((product) => product.code === pathSequence[0]);
 
 export function ConlyraSystemMap() {
   const rootRef = useRef<HTMLElement>(null);
-  const initialProductIndex = products.findIndex((product) => product.code === pathSequence[0]);
   const [activeIndex,setActiveIndex] = useState(initialProductIndex);
   const [paused,setPaused] = useState(false);
   const active = products[activeIndex];
