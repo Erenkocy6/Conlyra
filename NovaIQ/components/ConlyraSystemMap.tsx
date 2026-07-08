@@ -32,7 +32,7 @@ const products: Product[] = [
   },
   {
     code: "02",
-    name: "Flow Engine",
+    name: "Workflow Automation",
     label: "ORCHESTRATION",
     href: "/workflow-automatisierung",
     command: "OPEN FLOW ENGINE",
