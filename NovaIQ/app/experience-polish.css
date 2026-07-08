@@ -1,0 +1,98 @@
+/* =========================================================
+   CONLYRA EXPERIENCE POLISH
+   Signature scroll timing, OS sticky stability and film pacing.
+   ========================================================= */
+
+/* Manifesto: no dead tail after the reveal. */
+[data-director-manifesto] {
+  min-height: 176svh !important;
+}
+
+/* Center the CONLYRA logo inside the hover video preview. */
+[data-hover-reel] > div:last-child::before {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 3;
+  width: clamp(64px, 8vw, 108px);
+  aspect-ratio: 640.97 / 529.49;
+  transform: translate(-50%, -50%);
+  background: url('/conlyra-logo.svg') center / contain no-repeat;
+  filter: brightness(0) invert(1);
+  opacity: .92;
+  content: "";
+  pointer-events: none;
+}
+
+/* CONLYRA OS: keep the complete stage stable for the whole story. */
+[data-conlyra-os-story] {
+  min-height: 420svh !important;
+  overflow: visible !important;
+}
+
+[data-conlyra-os-story] > div:first-child {
+  position: sticky !important;
+  top: 0 !important;
+  height: 100svh !important;
+  min-height: 100svh !important;
+  max-height: 100svh !important;
+  overflow: hidden !important;
+  padding-top: clamp(74px, 9vh, 96px) !important;
+  padding-bottom: clamp(18px, 3vh, 32px) !important;
+}
+
+[data-conlyra-os-story] > div:first-child > div {
+  height: 100%;
+  align-content: center;
+}
+
+[data-conlyra-os-story] [aria-label="CONLYRA Operations Graph"] {
+  max-height: calc(100svh - 128px);
+}
+
+/* Film chapter: shorter, evenly distributed signature scroll moment. */
+[data-film-chapter] {
+  min-height: 220svh !important;
+}
+
+[data-film-chapter] > div:first-child {
+  height: 100svh !important;
+  min-height: 100svh !important;
+}
+
+[data-film-chapter] [data-film-word] {
+  will-change: opacity, transform;
+}
+
+@media (max-height: 800px) and (min-width: 901px) {
+  [data-conlyra-os-story] > div:first-child {
+    padding-top: 68px !important;
+    padding-bottom: 14px !important;
+  }
+
+  [data-conlyra-os-story] [aria-label="CONLYRA Operations Graph"] {
+    transform: scale(.9);
+    transform-origin: center right;
+  }
+}
+
+@media (max-width: 900px) {
+  [data-conlyra-os-story] {
+    min-height: auto !important;
+  }
+
+  [data-conlyra-os-story] > div:first-child {
+    position: relative !important;
+    top: auto !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding-top: 90px !important;
+    padding-bottom: 70px !important;
+  }
+
+  [data-film-chapter] {
+    min-height: 180svh !important;
+  }
+}
