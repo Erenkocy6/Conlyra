@@ -1,27 +1,149 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
+import styles from "./ConlyraRouteBoundary.module.css";
+
+type TransitionPhase = "idle" | "covering" | "covered" | "revealing";
+
+const TRANSITION_FLAG = "conlyra-liquid-transition";
 
 export function ConlyraRouteBoundary() {
+  const [phase, setPhase] = useState<TransitionPhase>("idle");
+  const navigatingRef = useRef(false);
+  const targetUrlRef = useRef<string | null>(null);
+
   useEffect(() => {
+    const previousScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+
+    const enteredThroughTransition = window.sessionStorage.getItem(TRANSITION_FLAG) === "1";
+
+    if (enteredThroughTransition) {
+      window.sessionStorage.removeItem(TRANSITION_FLAG);
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      setPhase("covered");
+
+      const firstFrame = window.requestAnimationFrame(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+        const secondFrame = window.requestAnimationFrame(() => {
+          setPhase("revealing");
+        });
+
+        window.setTimeout(() => {
+          window.cancelAnimationFrame(secondFrame);
+        }, 1200);
+      });
+
+      const settleTimer = window.setTimeout(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+        setPhase("idle");
+      }, 1120);
+
+      return () => {
+        window.cancelAnimationFrame(firstFrame);
+        window.clearTimeout(settleTimer);
+        window.history.scrollRestoration = previousScrollRestoration;
+      };
+    }
+
     const handleClick = (event: MouseEvent) => {
-      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+      if (
+        event.defaultPrevented ||
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey ||
+        navigatingRef.current
+      ) {
         return;
       }
 
       const target = event.target;
       if (!(target instanceof Element)) return;
 
-      const link = target.closest<HTMLAnchorElement>('a[href="/ai-agenten"]');
-      if (!link || window.location.pathname === "/ai-agenten") return;
+      const link = target.closest<HTMLAnchorElement>("a[href]");
+      if (!link) return;
+
+      const rawHref = link.getAttribute("href");
+      if (!rawHref || rawHref.startsWith("mailto:") || rawHref.startsWith("tel:") || rawHref.startsWith("javascript:")) return;
+      if (link.target === "_blank" || link.hasAttribute("download")) return;
+
+      const nextUrl = new URL(link.href, window.location.href);
+      if (nextUrl.origin !== window.location.origin) return;
+
+      const currentUrl = new URL(window.location.href);
+      const sameDocument =
+        nextUrl.pathname === currentUrl.pathname &&
+        nextUrl.search === currentUrl.search;
+
+      if (sameDocument) return;
 
       event.preventDefault();
-      window.location.assign(link.href);
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+
+      navigatingRef.current = true;
+      targetUrlRef.current = nextUrl.href;
+      setPhase("covering");
+
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const navigationDelay = reducedMotion ? 30 : 900;
+
+      window.setTimeout(() => {
+        setPhase("covered");
+        window.sessionStorage.setItem(TRANSITION_FLAG, "1");
+        window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+
+        const destination = targetUrlRef.current;
+        if (destination) window.location.assign(destination);
+      }, navigationDelay);
     };
 
     document.addEventListener("click", handleClick, true);
-    return () => document.removeEventListener("click", handleClick, true);
+
+    return () => {
+      document.removeEventListener("click", handleClick, true);
+      window.history.scrollRestoration = previousScrollRestoration;
+    };
   }, []);
 
-  return null;
+  useEffect(() => {
+    const body = document.body;
+    const previousOverflow = body.style.overflow;
+
+    if (phase !== "idle") {
+      body.style.overflow = "hidden";
+    }
+
+    return () => {
+      body.style.overflow = previousOverflow;
+    };
+  }, [phase]);
+
+  return (
+    <div className={styles.overlay} data-phase={phase} aria-hidden="true">
+      <div className={styles.liquid}>
+        <svg className={styles.waveTop} viewBox="0 0 1600 180" preserveAspectRatio="none" aria-hidden="true">
+          <path
+            d="M0 120C140 36 274 34 410 112C548 192 690 188 836 94C980 2 1120 14 1260 102C1390 184 1508 174 1600 112V180H0V120Z"
+            fill="currentColor"
+          />
+        </svg>
+        <svg className={styles.waveBottom} viewBox="0 0 1600 180" preserveAspectRatio="none" aria-hidden="true">
+          <path
+            d="M0 120C140 36 274 34 410 112C548 192 690 188 836 94C980 2 1120 14 1260 102C1390 184 1508 174 1600 112V180H0V120Z"
+            fill="currentColor"
+          />
+        </svg>
+      </div>
+
+      <div className={styles.logoStage}>
+        <div className={styles.logoWrap}>
+          <img src="/conlyra-logo.svg" alt="" />
+          <span>CONLYRA / SYSTEM TRANSITION</span>
+        </div>
+      </div>
+    </div>
+  );
 }
