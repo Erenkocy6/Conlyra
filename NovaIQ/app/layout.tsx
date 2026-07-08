@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Poppins } from "next/font/google";
 import "./globals.css";
+import "./director-patch.css";
 
 const poppins = Poppins({
   subsets: ["latin"],
