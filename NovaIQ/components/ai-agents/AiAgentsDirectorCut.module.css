@@ -3,19 +3,23 @@
    Additive product-page polish. Scoped through stable data hooks.
    ========================================================= */
 
-:global([data-ai-agents-experience]) {
+.directorCut {
   --aa-lime: #b7ff2d;
   --aa-hairline: rgba(255,255,255,.12);
   --aa-paper: #f1f1ec;
   isolation: isolate;
 }
 
-:global([data-aa-hero]) {
+.directorCut:global([data-ai-agents-experience]) {
+  position: relative;
+}
+
+.directorCut :global([data-aa-hero]) {
   min-height: 100svh;
   border-bottom: 1px solid var(--aa-hairline);
 }
 
-:global([data-aa-hero])::after {
+.directorCut :global([data-aa-hero])::after {
   position: absolute;
   inset: auto 0 0;
   z-index: 2;
@@ -25,15 +29,15 @@
   pointer-events: none;
 }
 
-:global([data-aa-hero] h1) {
+.directorCut :global([data-aa-hero] h1) {
   text-wrap: balance;
 }
 
-:global([data-aa-hero] nav a) {
+.directorCut :global([data-aa-hero] nav a) {
   position: relative;
 }
 
-:global([data-aa-hero] nav a)::after {
+.directorCut :global([data-aa-hero] nav a)::after {
   position: absolute;
   left: 96px;
   right: 0;
@@ -46,47 +50,47 @@
   transition: transform 360ms cubic-bezier(.2,.8,.2,1), background 220ms ease;
 }
 
-:global([data-aa-hero] nav a:hover)::after,
-:global([data-aa-hero] nav a:focus-visible)::after {
+.directorCut :global([data-aa-hero] nav a:hover)::after,
+.directorCut :global([data-aa-hero] nav a:focus-visible)::after {
   background: linear-gradient(90deg, var(--aa-lime), rgba(183,255,45,.04));
   transform: scaleX(1);
 }
 
-:global([data-aa-manifesto]) {
+.directorCut :global([data-aa-manifesto]) {
   min-height: 168svh;
 }
 
-:global([data-agent-index]) {
+.directorCut :global([data-agent-index]) {
   contain: layout paint;
 }
 
-:global([data-agent-index] button) {
+.directorCut :global([data-agent-index] button) {
   outline: none;
 }
 
-:global([data-agent-index] button:focus-visible) {
+.directorCut :global([data-agent-index] button:focus-visible) {
   box-shadow: inset 3px 0 0 var(--aa-lime);
 }
 
-:global([data-agent-index] button > span:last-child) {
+.directorCut :global([data-agent-index] button > span:last-child) {
   transition: transform 260ms cubic-bezier(.2,.8,.2,1), color 180ms ease;
 }
 
-:global([data-agent-index] button:hover > span:last-child),
-:global([data-agent-index] button:focus-visible > span:last-child) {
+.directorCut :global([data-agent-index] button:hover > span:last-child),
+.directorCut :global([data-agent-index] button:focus-visible > span:last-child) {
   color: var(--aa-lime);
   transform: translate(4px,-4px);
 }
 
-:global([data-agent-system]) {
+.directorCut :global([data-agent-system]) {
   min-height: 360svh;
 }
 
-:global([data-agent-system] article) {
+.directorCut :global([data-agent-system] article) {
   position: relative;
 }
 
-:global([data-agent-system] article)::after {
+.directorCut :global([data-agent-system] article)::after {
   position: absolute;
   inset: 0;
   border: 1px solid rgba(183,255,45,.08);
@@ -94,18 +98,18 @@
   pointer-events: none;
 }
 
-:global([data-agent-system] button:focus-visible) {
+.directorCut :global([data-agent-system] button:focus-visible) {
   outline: 1px solid var(--aa-lime);
   outline-offset: -2px;
 }
 
-:global([data-live-demo]) {
+.directorCut :global([data-live-demo]) {
   position: relative;
   overflow: hidden;
   box-shadow: 0 44px 140px rgba(0,0,0,.48);
 }
 
-:global([data-live-demo])::before {
+.directorCut :global([data-live-demo])::before {
   position: absolute;
   inset: 0 auto 0 0;
   z-index: 4;
@@ -116,11 +120,11 @@
   pointer-events: none;
 }
 
-:global([data-demo-step]) {
+.directorCut :global([data-demo-step]) {
   position: relative;
 }
 
-:global([data-demo-step][data-current="true"])::before {
+.directorCut :global([data-demo-step][data-current="true"])::before {
   position: absolute;
   left: 0;
   top: 18%;
@@ -131,37 +135,37 @@
   content: "";
 }
 
-:global([data-demo-step][data-active="true"] code) {
+.directorCut :global([data-demo-step][data-active="true"] code) {
   color: rgba(255,255,255,.5);
 }
 
-:global([data-approval-gate][data-state="approval"]) {
+.directorCut :global([data-approval-gate][data-state="approval"]) {
   background: linear-gradient(90deg, rgba(183,255,45,.09), rgba(183,255,45,.018));
   box-shadow: inset 0 1px 0 rgba(183,255,45,.25);
 }
 
-:global([data-approval-gate][data-state="approved"]) {
+.directorCut :global([data-approval-gate][data-state="approved"]) {
   background: linear-gradient(90deg, rgba(183,255,45,.075), transparent 72%);
 }
 
-:global([data-aa-control]) {
+.directorCut :global([data-aa-control]) {
   min-height: 128svh;
 }
 
-:global([data-aa-control] video) {
+.directorCut :global([data-aa-control] video) {
   transform: scale(1.025);
   transition: transform 8s cubic-bezier(.2,.8,.2,1);
 }
 
-:global([data-aa-control]:hover video) {
+.directorCut :global([data-aa-control]:hover video) {
   transform: scale(1.065);
 }
 
-:global([data-aa-control] [data-risk-row]) {
+.directorCut :global([data-aa-control] [data-risk-row]) {
   position: relative;
 }
 
-:global([data-aa-control] [data-risk-row])::before {
+.directorCut :global([data-aa-control] [data-risk-row])::before {
   position: absolute;
   left: 0;
   bottom: -1px;
@@ -172,22 +176,22 @@
   transition: width 420ms cubic-bezier(.2,.8,.2,1);
 }
 
-:global([data-aa-control] [data-risk-row]:hover)::before {
+.directorCut :global([data-aa-control] [data-risk-row]:hover)::before {
   width: 100%;
 }
 
-:global([data-agent-trace]) {
+.directorCut :global([data-agent-trace]) {
   background:
     linear-gradient(180deg, rgba(255,255,255,.018), transparent 18%),
     #000;
 }
 
-:global([data-trace-console]) {
+.directorCut :global([data-trace-console]) {
   position: relative;
   overflow: hidden;
 }
 
-:global([data-trace-console])::after {
+.directorCut :global([data-trace-console])::after {
   position: absolute;
   inset: 0;
   background: repeating-linear-gradient(180deg, transparent 0 65px, rgba(255,255,255,.018) 65px 66px);
@@ -195,16 +199,16 @@
   pointer-events: none;
 }
 
-:global([data-trace-console] > *) {
+.directorCut :global([data-trace-console] > *) {
   position: relative;
   z-index: 1;
 }
 
-:global([data-aa-final]) {
+.directorCut :global([data-aa-final]) {
   min-height: min(980px, 100svh);
 }
 
-:global([data-aa-final] video) {
+.directorCut :global([data-aa-final] video) {
   transform: scale(1.02);
   animation: aaFinalFilm 16s ease-in-out infinite alternate;
 }
@@ -215,53 +219,53 @@
 }
 
 @media (max-width: 1100px) {
-  :global([data-agent-system]) {
+  .directorCut :global([data-agent-system]) {
     min-height: auto;
   }
 
-  :global([data-aa-control]) {
+  .directorCut :global([data-aa-control]) {
     min-height: 110svh;
   }
 }
 
 @media (max-width: 820px) {
-  :global([data-aa-hero] nav a)::after {
+  .directorCut :global([data-aa-hero] nav a)::after {
     left: 76px;
   }
 
-  :global([data-aa-manifesto]) {
+  .directorCut :global([data-aa-manifesto]) {
     min-height: 150svh;
   }
 
-  :global([data-agent-index]) {
+  .directorCut :global([data-agent-index]) {
     contain: none;
   }
 
-  :global([data-live-demo]) {
+  .directorCut :global([data-live-demo]) {
     box-shadow: none;
   }
 
-  :global([data-aa-control]) {
+  .directorCut :global([data-aa-control]) {
     min-height: 100svh;
   }
 
-  :global([data-aa-final]) {
+  .directorCut :global([data-aa-final]) {
     min-height: 92svh;
   }
 }
 
 @media (hover: none), (pointer: coarse) {
-  :global([data-aa-control]:hover video) {
+  .directorCut :global([data-aa-control]:hover video) {
     transform: scale(1.025);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :global([data-aa-final] video) {
+  .directorCut :global([data-aa-final] video) {
     animation: none;
   }
 
-  :global([data-aa-control] video) {
+  .directorCut :global([data-aa-control] video) {
     transition: none;
   }
 }
