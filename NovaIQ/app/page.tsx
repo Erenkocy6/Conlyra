@@ -1,4 +1,5 @@
 import { ConlyraDirectorShell } from "@/components/ConlyraDirectorShell";
+import { ConlyraOperatingSystem } from "@/components/ConlyraOperatingSystem";
 import { ConlyraPremierExperience } from "@/components/ConlyraPremierExperience";
 
 const siteUrl = "https://conlyra.ai";
@@ -202,6 +203,7 @@ export default function Home() {
   return (
     <>
       <ConlyraDirectorShell />
+      <ConlyraOperatingSystem />
       <ConlyraPremierExperience />
       <script
         type="application/ld+json"
