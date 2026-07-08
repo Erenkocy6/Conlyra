@@ -4,6 +4,7 @@ import { ConlyraCommandCenter } from "@/components/ConlyraCommandCenter";
 import { ConlyraMegaFooter } from "@/components/ConlyraMegaFooter";
 import { ConlyraRouteBoundary } from "@/components/ConlyraRouteBoundary";
 import { ConlyraScrollDirector } from "@/components/ConlyraScrollDirector";
+import { ConlyraSystemStatus } from "@/components/ConlyraSystemStatus";
 import "./globals.css";
 import "./director-patch.css";
 import "./experience-polish.css";
@@ -128,6 +129,7 @@ export default function RootLayout({
         </a>
         {children}
         <ConlyraCommandCenter />
+        <ConlyraSystemStatus />
         <ConlyraRouteBoundary />
         <ConlyraScrollDirector />
         <ConlyraMegaFooter />
