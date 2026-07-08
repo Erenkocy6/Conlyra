@@ -16,6 +16,11 @@ export function ConlyraRouteBoundary() {
     const previousScrollRestoration = window.history.scrollRestoration;
     window.history.scrollRestoration = "manual";
 
+    let firstFrame = 0;
+    let secondFrame = 0;
+    let settleTimer = 0;
+    let navigationTimer = 0;
+
     const enteredThroughTransition = window.sessionStorage.getItem(TRANSITION_FLAG) === "1";
 
     if (enteredThroughTransition) {
@@ -23,27 +28,19 @@ export function ConlyraRouteBoundary() {
       window.scrollTo({ top: 0, left: 0, behavior: "auto" });
       setPhase("covered");
 
-      const firstFrame = window.requestAnimationFrame(() => {
+      firstFrame = window.requestAnimationFrame(() => {
         window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-        const secondFrame = window.requestAnimationFrame(() => {
+        secondFrame = window.requestAnimationFrame(() => {
           setPhase("revealing");
         });
-
-        window.setTimeout(() => {
-          window.cancelAnimationFrame(secondFrame);
-        }, 1200);
       });
 
-      const settleTimer = window.setTimeout(() => {
+      settleTimer = window.setTimeout(() => {
         window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+        navigatingRef.current = false;
+        targetUrlRef.current = null;
         setPhase("idle");
       }, 1120);
-
-      return () => {
-        window.cancelAnimationFrame(firstFrame);
-        window.clearTimeout(settleTimer);
-        window.history.scrollRestoration = previousScrollRestoration;
-      };
     }
 
     const handleClick = (event: MouseEvent) => {
@@ -66,7 +63,15 @@ export function ConlyraRouteBoundary() {
       if (!link) return;
 
       const rawHref = link.getAttribute("href");
-      if (!rawHref || rawHref.startsWith("mailto:") || rawHref.startsWith("tel:") || rawHref.startsWith("javascript:")) return;
+      if (
+        !rawHref ||
+        rawHref.startsWith("mailto:") ||
+        rawHref.startsWith("tel:") ||
+        rawHref.startsWith("javascript:")
+      ) {
+        return;
+      }
+
       if (link.target === "_blank" || link.hasAttribute("download")) return;
 
       const nextUrl = new URL(link.href, window.location.href);
@@ -90,7 +95,7 @@ export function ConlyraRouteBoundary() {
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const navigationDelay = reducedMotion ? 30 : 900;
 
-      window.setTimeout(() => {
+      navigationTimer = window.setTimeout(() => {
         setPhase("covered");
         window.sessionStorage.setItem(TRANSITION_FLAG, "1");
         window.scrollTo({ top: 0, left: 0, behavior: "auto" });
@@ -104,6 +109,10 @@ export function ConlyraRouteBoundary() {
 
     return () => {
       document.removeEventListener("click", handleClick, true);
+      window.cancelAnimationFrame(firstFrame);
+      window.cancelAnimationFrame(secondFrame);
+      window.clearTimeout(settleTimer);
+      window.clearTimeout(navigationTimer);
       window.history.scrollRestoration = previousScrollRestoration;
     };
   }, []);
