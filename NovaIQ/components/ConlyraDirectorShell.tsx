@@ -13,13 +13,14 @@ const heroCapabilities = [
   ["01", "AI Strategy", "#system"],
   ["02", "Custom Agents", "/ai-agenten"],
   ["03", "Workflow Systems", "/workflow-automatisierung"],
-  ["04", "Private Intelligence", "#trust"],
+  ["04", "Private Intelligence", "/private-intelligence"],
 ] as const;
 
 const quickLinks = [
   ["Home", "#director-top"],
   ["AI-Agenten", "/ai-agenten"],
   ["Workflow-Automatisierung", "/workflow-automatisierung"],
+  ["Private Intelligence", "/private-intelligence"],
   ["System", "#system"],
   ["Anwendungen", "#use-cases"],
   ["Wirkung", "#impact"],
@@ -66,7 +67,7 @@ const hoverReels = [
     title: "Unternehmenswissen wird ausführbar.",
     meta: "Search / RAG / Private Context",
     video: "/media/AdobeStock_1525614966.mp4",
-    href: "#trust",
+    href: "/private-intelligence",
   },
 ] as const;
 
