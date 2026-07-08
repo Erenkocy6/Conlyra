@@ -337,10 +337,16 @@ export function ConlyraCommandCenter() {
                 <span>ACTION</span>
               </div>
 
-              <div className={styles.previewFooter}>
+              <Link
+                href={activeCommand.href}
+                className={styles.previewFooter}
+                onClick={closeCenter}
+                aria-label={`${activeCommand.title} öffnen`}
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
                 <span>{activeCommand.signal}</span>
                 <b>OPEN PRODUCT ↗</b>
-              </div>
+              </Link>
             </aside>
           </div>
 
