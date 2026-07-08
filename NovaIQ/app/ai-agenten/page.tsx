@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { AiAgentsExperience } from "@/components/ai-agents/AiAgentsExperience";
+import { SubpageVideoChapters } from "@/components/cinematic/SubpageVideoChapters";
 
 export const metadata: Metadata = {
   title: "AI-Agenten für Unternehmen",
@@ -37,6 +38,7 @@ export default function AiAgentsPage() {
     <>
       <main id="main">
         <AiAgentsExperience />
+        <SubpageVideoChapters variant="agents" />
       </main>
       <script
         type="application/ld+json"
