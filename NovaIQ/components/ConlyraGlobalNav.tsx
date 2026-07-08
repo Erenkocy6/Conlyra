@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import styles from "./ConlyraGlobalNav.module.css";
 
@@ -47,9 +48,9 @@ export function ConlyraGlobalNav() {
   return (
     <>
       <header className={styles.nav} data-conlyra-global-nav>
-        <a className={styles.brand} href="/" aria-label="CONLYRA Startseite">
+        <Link className={styles.brand} href="/" aria-label="CONLYRA Startseite">
           <img src="/conlyra-logo.svg" alt="CONLYRA" />
-        </a>
+        </Link>
 
         <button
           className={styles.toggle}
@@ -71,9 +72,9 @@ export function ConlyraGlobalNav() {
           </video>
           <div className={styles.menuLeftShade} aria-hidden="true" />
 
-          <a className={styles.menuBrand} href="/" onClick={closeMenu}>
+          <Link className={styles.menuBrand} href="/" onClick={closeMenu}>
             <img src="/conlyra-logo.svg" alt="CONLYRA" />
-          </a>
+          </Link>
 
           <div className={styles.menuEditorial}>
             <p><span>CONLYRA</span> / SYSTEM NAVIGATION / 2026</p>
@@ -98,29 +99,29 @@ export function ConlyraGlobalNav() {
               <nav aria-label="Quick Links">
                 <small>QUICK LINKS</small>
                 {quickLinks.map(([label, href]) => (
-                  <a href={href} key={label} onClick={closeMenu}>
+                  <Link href={href} key={label} onClick={closeMenu}>
                     <span>{label}</span><Arrow />
-                  </a>
+                  </Link>
                 ))}
               </nav>
 
               <nav aria-label="System Links">
                 <small>SYSTEM LINKS</small>
                 {systemLinks.map(([label, href]) => (
-                  <a href={href} key={label} onClick={closeMenu}>
+                  <Link href={href} key={label} onClick={closeMenu}>
                     <span>{label}</span><Arrow />
-                  </a>
+                  </Link>
                 ))}
               </nav>
             </div>
 
             <div className={styles.menuCta}>
               <span>START WITH A REAL WORKFLOW.</span>
-              <a href="/#contact" onClick={closeMenu}>Demo anfordern <Arrow /></a>
+              <Link href="/#contact" onClick={closeMenu}>Demo anfordern <Arrow /></Link>
             </div>
           </div>
 
-          <a className={styles.videoPanel} href="/ai-agenten" onClick={closeMenu}>
+          <Link className={styles.videoPanel} href="/ai-agenten" onClick={closeMenu}>
             <video autoPlay loop muted playsInline preload="metadata" aria-hidden="true">
               <source src="/media/AdobeStock_517331471.mp4" type="video/mp4" />
             </video>
@@ -133,7 +134,7 @@ export function ConlyraGlobalNav() {
               <div><i>▶</i><span>AGENT SYSTEMS</span><strong>ROLE / CONTEXT / CONTROL</strong></div>
               <div><span>UNTERSEITE ÖFFNEN</span><Arrow /></div>
             </div>
-          </a>
+          </Link>
         </section>
       </div>
     </>
