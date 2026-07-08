@@ -12,13 +12,14 @@ const manifestoWords =
 const heroCapabilities = [
   ["01", "AI Strategy", "#system"],
   ["02", "Custom Agents", "/ai-agenten"],
-  ["03", "Workflow Systems", "#use-cases"],
+  ["03", "Workflow Systems", "/workflow-automatisierung"],
   ["04", "Private Intelligence", "#trust"],
 ] as const;
 
 const quickLinks = [
   ["Home", "#director-top"],
   ["AI-Agenten", "/ai-agenten"],
+  ["Workflow-Automatisierung", "/workflow-automatisierung"],
   ["System", "#system"],
   ["Anwendungen", "#use-cases"],
   ["Wirkung", "#impact"],
@@ -57,7 +58,7 @@ const hoverReels = [
     title: "Arbeit bewegt sich durch ein System.",
     meta: "Routing / Actions / Audit Trail",
     video: "/media/AdobeStock_1558014909.mp4",
-    href: "#use-cases",
+    href: "/workflow-automatisierung",
   },
   {
     no: "04",
