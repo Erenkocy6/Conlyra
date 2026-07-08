@@ -1,6 +1,7 @@
 import { ConlyraDirectorShell } from "@/components/ConlyraDirectorShell";
 import { ConlyraOperatingSystem } from "@/components/ConlyraOperatingSystem";
 import { ConlyraStoryChapters } from "@/components/ConlyraStoryChapters";
+import { ConlyraSystemMap } from "@/components/ConlyraSystemMap";
 
 const siteUrl = "https://conlyra.ai";
 
@@ -205,6 +206,7 @@ export default function Home() {
       <main id="main">
         <ConlyraDirectorShell />
         <ConlyraOperatingSystem />
+        <ConlyraSystemMap />
         <ConlyraStoryChapters />
       </main>
       <script
