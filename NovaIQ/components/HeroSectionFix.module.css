@@ -1,0 +1,14 @@
+.root {
+  display: none;
+}
+
+:global(.conlyra-type-manifesto) {
+  background: #000 !important;
+  border-top-color: transparent !important;
+}
+
+:global(.conlyra-type-manifesto)::before,
+:global(.conlyra-type-manifesto)::after {
+  display: none !important;
+  content: none !important;
+}
