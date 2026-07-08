@@ -1,10 +1,13 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 const clamp01 = (value: number) => Math.min(1, Math.max(0, value));
 
 export function ConlyraScrollDirector() {
+  const pathname = usePathname();
+
   useEffect(() => {
     let disposed = false;
     let cleanup: () => void = () => {};
@@ -115,7 +118,7 @@ export function ConlyraScrollDirector() {
       disposed = true;
       cleanup();
     };
-  }, []);
+  }, [pathname]);
 
   return null;
 }
