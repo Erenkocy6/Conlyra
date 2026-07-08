@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import type { CSSProperties } from "react";
 import styles from "./ConlyraDirectorShell.module.css";
 
 const navItems = [
@@ -10,6 +11,11 @@ const navItems = [
   ["Vertrauen", "#trust"],
   ["Kontakt", "#contact"],
 ];
+
+const manifestoWords =
+  "Verbinden Sie Daten Tools und Teams mit KI-Agenten die Kontext verstehen Entscheidungen vorbereiten und Arbeit kontrolliert ausführen".split(
+    " ",
+  );
 
 const hoverReels = [
   {
@@ -91,12 +97,57 @@ export function ConlyraDirectorShell() {
   }, [menuOpen]);
 
   useEffect(() => {
+    const shell = shellRef.current;
+    if (!shell) return;
+
+    let disposed = false;
+    let cleanup: () => void = () => {};
+
+    const setup = async () => {
+      const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([
+        import("gsap"),
+        import("gsap/ScrollTrigger"),
+      ]);
+      if (disposed) return;
+
+      gsap.registerPlugin(ScrollTrigger);
+      const section = shell.querySelector<HTMLElement>("[data-director-manifesto]");
+      const words = Array.from(shell.querySelectorAll<HTMLElement>("[data-director-word]"));
+      if (!section || !words.length) return;
+
+      const trigger = ScrollTrigger.create({
+        trigger: section,
+        start: "top 72%",
+        end: "bottom 34%",
+        scrub: 0.72,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          const total = words.length;
+          words.forEach((word, index) => {
+            const progress = Math.min(1, Math.max(0, self.progress * (total + 1.15) - index));
+            word.style.setProperty("--director-fill", `${Math.round(progress * 100)}%`);
+          });
+        },
+      });
+
+      cleanup = () => trigger.kill(true);
+      ScrollTrigger.refresh();
+    };
+
+    void setup();
+    return () => {
+      disposed = true;
+      cleanup();
+    };
+  }, []);
+
+  useEffect(() => {
     const preview = previewRef.current;
     const section = shellRef.current?.querySelector<HTMLElement>("[data-hover-reel]");
     if (!preview || !section) return;
 
     let disposed = false;
-    let cleanup = () => undefined;
+    let cleanup: () => void = () => {};
 
     const setup = async () => {
       const { default: gsap } = await import("gsap");
@@ -125,11 +176,6 @@ export function ConlyraDirectorShell() {
   const activateReel = (index: number) => {
     setActiveReel(index);
     setPreviewVisible(true);
-    const video = videoRef.current;
-    if (video) {
-      video.load();
-      void video.play().catch(() => undefined);
-    }
   };
 
   return (
@@ -137,7 +183,7 @@ export function ConlyraDirectorShell() {
       <header
         className={styles.nav}
         data-conlyra-director-nav
-        style={{ "--director-progress": scrollProgress } as React.CSSProperties}
+        style={{ "--director-progress": scrollProgress } as CSSProperties}
       >
         <a className={styles.brand} href="#director-top" aria-label="CONLYRA Startseite">
           <img src="/conlyra-logo.svg" alt="" aria-hidden="true" />
@@ -244,6 +290,23 @@ export function ConlyraDirectorShell() {
         </div>
       </section>
 
+      <section className={styles.manifesto} data-director-manifesto aria-labelledby="director-manifesto-title">
+        <div className={styles.manifestoSticky}>
+          <p>THE OPERATING SHIFT</p>
+          <h2 id="director-manifesto-title">
+            {manifestoWords.map((word, index) => (
+              <span key={`${word}-${index}`} data-director-word>
+                {word}{index < manifestoWords.length - 1 ? " " : ""}
+              </span>
+            ))}
+          </h2>
+          <div className={styles.manifestoFooter}>
+            <span>NOT ANOTHER AI TOOL.</span>
+            <strong>Ein kontrollierbares System für operative Arbeit.</strong>
+          </div>
+        </div>
+      </section>
+
       <section
         className={styles.hoverReel}
         data-hover-reel
@@ -278,7 +341,7 @@ export function ConlyraDirectorShell() {
           ref={previewRef}
           aria-hidden="true"
         >
-          <video key={hoverReels[activeReel].video} ref={videoRef} muted loop playsInline preload="metadata">
+          <video key={hoverReels[activeReel].video} ref={videoRef} autoPlay muted loop playsInline preload="metadata">
             <source src={hoverReels[activeReel].video} type="video/mp4" />
           </video>
           <div><span>{hoverReels[activeReel].label}</span><strong>CONLYRA / 0{activeReel + 1}</strong></div>
