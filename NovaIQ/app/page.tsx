@@ -1,6 +1,6 @@
 import { ConlyraDirectorShell } from "@/components/ConlyraDirectorShell";
 import { ConlyraOperatingSystem } from "@/components/ConlyraOperatingSystem";
-import { ConlyraPremierExperience } from "@/components/ConlyraPremierExperience";
+import { ConlyraStoryChapters } from "@/components/ConlyraStoryChapters";
 
 const siteUrl = "https://conlyra.ai";
 
@@ -202,9 +202,11 @@ const pageSchema = {
 export default function Home() {
   return (
     <>
-      <ConlyraDirectorShell />
-      <ConlyraOperatingSystem />
-      <ConlyraPremierExperience />
+      <main id="main">
+        <ConlyraDirectorShell />
+        <ConlyraOperatingSystem />
+        <ConlyraStoryChapters />
+      </main>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
