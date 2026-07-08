@@ -6,9 +6,31 @@ import styles from "./ConlyraRouteBoundary.module.css";
 type TransitionPhase = "idle" | "covering" | "covered" | "revealing";
 
 const TRANSITION_FLAG = "conlyra-liquid-transition";
+const TRANSITION_MESSAGE = "conlyra-liquid-transition-message";
+const DEFAULT_MESSAGE = "SYSTEM TRANSITION";
+
+const routeMessages = [
+  ["/ai-agenten", "AGENT SYSTEM INITIALIZING"],
+  ["/workflow-automatisierung", "FLOW ENGINE CONNECTING"],
+  ["/private-intelligence", "PRIVATE CONTEXT LOADING"],
+  ["/voice-ai", "VOICE CHANNEL OPENING"],
+  ["/ai-strategy", "READINESS SCAN STARTING"],
+  ["/integrationen", "OPERATING STACK CONNECTING"],
+  ["/governance-security", "CONTROL LAYER VERIFYING"],
+  ["/lab", "EXPERIMENT ENVIRONMENT OPENING"],
+] as const;
+
+function getTransitionMessage(pathname: string) {
+  const matchedRoute = routeMessages.find(([route]) =>
+    pathname === route || pathname.startsWith(`${route}/`),
+  );
+
+  return matchedRoute?.[1] ?? DEFAULT_MESSAGE;
+}
 
 export function ConlyraRouteBoundary() {
   const [phase, setPhase] = useState<TransitionPhase>("idle");
+  const [transitionMessage, setTransitionMessage] = useState(DEFAULT_MESSAGE);
   const navigatingRef = useRef(false);
   const targetUrlRef = useRef<string | null>(null);
 
@@ -24,7 +46,11 @@ export function ConlyraRouteBoundary() {
     const enteredThroughTransition = window.sessionStorage.getItem(TRANSITION_FLAG) === "1";
 
     if (enteredThroughTransition) {
+      const persistedMessage = window.sessionStorage.getItem(TRANSITION_MESSAGE);
+
       window.sessionStorage.removeItem(TRANSITION_FLAG);
+      window.sessionStorage.removeItem(TRANSITION_MESSAGE);
+      setTransitionMessage(persistedMessage ?? getTransitionMessage(window.location.pathname));
       window.scrollTo({ top: 0, left: 0, behavior: "auto" });
       setPhase("covered");
 
@@ -88,8 +114,11 @@ export function ConlyraRouteBoundary() {
       event.stopPropagation();
       event.stopImmediatePropagation();
 
+      const nextMessage = getTransitionMessage(nextUrl.pathname);
+
       navigatingRef.current = true;
       targetUrlRef.current = nextUrl.href;
+      setTransitionMessage(nextMessage);
       setPhase("covering");
 
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -98,6 +127,7 @@ export function ConlyraRouteBoundary() {
       navigationTimer = window.setTimeout(() => {
         setPhase("covered");
         window.sessionStorage.setItem(TRANSITION_FLAG, "1");
+        window.sessionStorage.setItem(TRANSITION_MESSAGE, nextMessage);
         window.scrollTo({ top: 0, left: 0, behavior: "auto" });
 
         const destination = targetUrlRef.current;
@@ -150,7 +180,7 @@ export function ConlyraRouteBoundary() {
       <div className={styles.logoStage}>
         <div className={styles.logoWrap}>
           <img src="/conlyra-logo.svg" alt="" />
-          <span>CONLYRA / SYSTEM TRANSITION</span>
+          <span>CONLYRA / {transitionMessage}</span>
         </div>
       </div>
     </div>
