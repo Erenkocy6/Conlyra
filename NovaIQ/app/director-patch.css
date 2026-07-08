@@ -1,0 +1,98 @@
+#main > section[aria-labelledby="manifesto-title"] {
+  display: none !important;
+}
+
+[data-director-manifesto] {
+  position: relative;
+  min-height: 188svh;
+  overflow: clip;
+  background: #000;
+  color: #fff;
+  border-top: 1px solid rgba(255,255,255,.1);
+}
+
+[data-director-manifesto] > div {
+  position: sticky;
+  top: 0;
+  min-height: 100svh;
+  width: min(calc(100% - 48px), 1440px);
+  margin-inline: auto;
+  display: grid;
+  align-content: center;
+  padding: 100px 0 72px;
+}
+
+[data-director-manifesto] > div > p:first-child {
+  margin: 0;
+  color: #b7ff2d;
+  font-family: var(--font-poppins), Arial, sans-serif;
+  font-size: .66rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+}
+
+[data-director-manifesto] h2 {
+  max-width: 15ch;
+  margin: 26px 0 0;
+  font-family: var(--font-poppins), Arial, sans-serif;
+  font-size: clamp(3.6rem, 6.8vw, 8rem);
+  line-height: .99;
+  letter-spacing: -.06em;
+  font-weight: 430;
+}
+
+[data-director-word] {
+  color: transparent;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,.98) var(--director-fill, 0%),
+    rgba(255,255,255,.18) var(--director-fill, 0%)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+[data-director-manifesto] > div > div {
+  margin-top: 38px;
+  display: grid;
+  grid-template-columns: 220px minmax(0, 520px);
+  gap: 24px;
+  align-items: start;
+  border-top: 1px solid rgba(255,255,255,.12);
+  padding-top: 18px;
+}
+
+[data-director-manifesto] > div > div span {
+  color: rgba(255,255,255,.32);
+  font-size: .6rem;
+  letter-spacing: .1em;
+}
+
+[data-director-manifesto] > div > div strong {
+  color: rgba(255,255,255,.62);
+  font-size: .82rem;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+@media (max-width: 720px) {
+  [data-director-manifesto] {
+    min-height: 158svh;
+  }
+
+  [data-director-manifesto] > div {
+    width: calc(100% - 28px);
+    padding-top: 86px;
+    padding-bottom: 54px;
+  }
+
+  [data-director-manifesto] h2 {
+    max-width: 100%;
+    font-size: clamp(3rem, 12.5vw, 5rem);
+  }
+
+  [data-director-manifesto] > div > div {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
