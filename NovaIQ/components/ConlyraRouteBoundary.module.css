@@ -1,0 +1,157 @@
+.overlay {
+  --conlyra-signal: #b7ff2d;
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  pointer-events: none;
+  overflow: hidden;
+  visibility: hidden;
+}
+
+.overlay[data-phase="covering"],
+.overlay[data-phase="covered"],
+.overlay[data-phase="revealing"] {
+  visibility: visible;
+}
+
+.liquid {
+  position: absolute;
+  inset: -2px -8vw;
+  background: var(--conlyra-signal);
+  color: var(--conlyra-signal);
+  transform: translate3d(0, 118%, 0);
+  will-change: transform;
+}
+
+.overlay[data-phase="covering"] .liquid {
+  transform: translate3d(0, 0, 0);
+  transition: transform 880ms cubic-bezier(.76, 0, .24, 1);
+}
+
+.overlay[data-phase="covered"] .liquid {
+  transform: translate3d(0, 0, 0);
+}
+
+.overlay[data-phase="revealing"] .liquid {
+  transform: translate3d(0, -118%, 0);
+  transition: transform 980ms cubic-bezier(.76, 0, .24, 1);
+}
+
+.waveTop,
+.waveBottom {
+  position: absolute;
+  left: -25%;
+  width: 150%;
+  height: clamp(120px, 16vh, 190px);
+  display: block;
+  overflow: visible;
+  color: var(--conlyra-signal);
+  will-change: transform;
+}
+
+.waveTop {
+  top: calc(clamp(120px, 16vh, 190px) * -0.92);
+  animation: conlyraWaterDrift 2.4s ease-in-out infinite alternate;
+}
+
+.waveBottom {
+  bottom: calc(clamp(120px, 16vh, 190px) * -0.92);
+  transform: rotate(180deg);
+  animation: conlyraWaterDriftBottom 2.8s ease-in-out infinite alternate;
+}
+
+@keyframes conlyraWaterDrift {
+  0% { transform: translate3d(-2.4%, 8px, 0) scaleY(.96); }
+  50% { transform: translate3d(1.8%, -5px, 0) scaleY(1.08); }
+  100% { transform: translate3d(-.7%, 4px, 0) scaleY(1); }
+}
+
+@keyframes conlyraWaterDriftBottom {
+  0% { transform: rotate(180deg) translate3d(1.8%, 6px, 0) scaleY(1.04); }
+  50% { transform: rotate(180deg) translate3d(-2.1%, -4px, 0) scaleY(.96); }
+  100% { transform: rotate(180deg) translate3d(.8%, 3px, 0) scaleY(1.06); }
+}
+
+.logoStage {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+}
+
+.logoWrap {
+  display: grid;
+  place-items: center;
+  gap: 18px;
+  opacity: 0;
+  transform: scale(.92) translateY(14px);
+  will-change: opacity, transform;
+}
+
+.logoWrap img {
+  width: clamp(92px, 10vw, 152px);
+  height: auto;
+  display: block;
+  filter: brightness(0);
+}
+
+.logoWrap span {
+  color: #050505;
+  font-family: var(--font-poppins), Arial, sans-serif;
+  font-size: .52rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+}
+
+.overlay[data-phase="covering"] .logoWrap {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  transition:
+    opacity 280ms ease 390ms,
+    transform 520ms cubic-bezier(.2,.8,.2,1) 320ms;
+}
+
+.overlay[data-phase="covered"] .logoWrap {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.overlay[data-phase="revealing"] .logoWrap {
+  opacity: 0;
+  transform: scale(.96) translateY(-10px);
+  transition:
+    opacity 220ms ease 120ms,
+    transform 420ms cubic-bezier(.2,.8,.2,1) 80ms;
+}
+
+@media (max-width: 700px) {
+  .waveTop,
+  .waveBottom {
+    left: -55%;
+    width: 210%;
+    height: 120px;
+  }
+
+  .waveTop { top: -108px; }
+  .waveBottom { bottom: -108px; }
+
+  .logoWrap img {
+    width: clamp(82px, 24vw, 116px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .waveTop,
+  .waveBottom {
+    animation: none;
+  }
+
+  .overlay[data-phase="covering"] .liquid,
+  .overlay[data-phase="revealing"] .liquid,
+  .overlay[data-phase="covering"] .logoWrap,
+  .overlay[data-phase="revealing"] .logoWrap {
+    transition-duration: 1ms !important;
+    transition-delay: 0ms !important;
+  }
+}
