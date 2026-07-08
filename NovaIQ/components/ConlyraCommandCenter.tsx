@@ -127,8 +127,21 @@ export function ConlyraCommandCenter() {
   const activeCommand = filteredCommands[activeIndex] ?? filteredCommands[0] ?? commands[0];
 
   useEffect(() => {
-    setActiveIndex(0);
-  }, [query]);
+    const handleOpenRequest = (event: Event) => {
+      const request = event as CustomEvent<{ code?: string }>;
+      const requestedCode = request.detail?.code;
+      const requestedIndex = requestedCode
+        ? commands.findIndex((item) => item.code === requestedCode)
+        : 0;
+
+      setQuery("");
+      setActiveIndex(requestedIndex >= 0 ? requestedIndex : 0);
+      setOpen(true);
+    };
+
+    window.addEventListener("conlyra:command-center-open", handleOpenRequest);
+    return () => window.removeEventListener("conlyra:command-center-open", handleOpenRequest);
+  }, []);
 
   useEffect(() => {
     const handleGlobalKeydown = (event: KeyboardEvent) => {
@@ -249,7 +262,10 @@ export function ConlyraCommandCenter() {
             <input
               ref={inputRef}
               value={query}
-              onChange={(event) => setQuery(event.target.value)}
+              onChange={(event) => {
+                setQuery(event.target.value);
+                setActiveIndex(0);
+              }}
               placeholder="Search systems, products or actions..."
               aria-label="Command Center durchsuchen"
             />
