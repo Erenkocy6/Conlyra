@@ -227,7 +227,7 @@
 @media (max-width: 700px) {
   .status {
     right: 10px;
-    bottom: 10px;
+    bottom: 58px;
     width: min(340px, calc(100vw - 20px));
   }
 
@@ -248,7 +248,7 @@
   }
 
   .panel {
-    max-height: min(470px, calc(100svh - 72px));
+    max-height: min(470px, calc(100svh - 120px));
   }
 }
 
