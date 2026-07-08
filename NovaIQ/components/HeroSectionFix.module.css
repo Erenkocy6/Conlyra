@@ -2,7 +2,12 @@
   display: none;
 }
 
+:global(.conlyra-hero) {
+  background: #000 !important;
+}
+
 :global(.conlyra-type-manifesto) {
+  min-height: 176svh !important;
   background: #000 !important;
   border-top-color: transparent !important;
 }
@@ -11,4 +16,41 @@
 :global(.conlyra-type-manifesto)::after {
   display: none !important;
   content: none !important;
+}
+
+:global(.conlyra-type-manifesto-inner) {
+  position: sticky !important;
+  top: 0 !important;
+  min-height: 100svh !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+:global(.conlyra-type-fill-headline),
+:global(.conlyra-type-manifesto-copy),
+:global(.conlyra-type-badges) {
+  visibility: visible !important;
+}
+
+:global(.conlyra-type-fill-headline span) {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.98) var(--word-fill, 0%),
+    rgba(255, 255, 255, 0.22) var(--word-fill, 0%)
+  ) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+}
+
+@media (max-width: 899px) {
+  :global(.conlyra-type-manifesto) {
+    min-height: 142svh !important;
+  }
+
+  :global(.conlyra-type-manifesto-inner) {
+    min-height: 100svh !important;
+    padding-top: 5.75rem !important;
+    padding-bottom: 4rem !important;
+  }
 }
