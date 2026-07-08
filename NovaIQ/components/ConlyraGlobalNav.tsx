@@ -7,6 +7,7 @@ import styles from "./ConlyraGlobalNav.module.css";
 const quickLinks = [
   ["Startseite", "/"],
   ["AI-Agenten", "/ai-agenten"],
+  ["Workflow-Automatisierung", "/workflow-automatisierung"],
   ["System", "/#system"],
   ["Anwendungen", "/#use-cases"],
   ["Wirkung", "/#impact"],
