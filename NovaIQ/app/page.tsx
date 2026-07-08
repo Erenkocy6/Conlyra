@@ -155,66 +155,34 @@ const faqSchema = {
     {
       "@type": "Question",
       name: "Was macht CONLYRA?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text:
-          "CONLYRA baut AI-Agenten, KI-Automatisierung und Workflow-Systeme, die Unternehmensdaten, Tools und Entscheidungen kontrolliert verbinden.",
-      },
+      acceptedAnswer: { "@type": "Answer", text: "CONLYRA baut AI-Agenten, KI-Automatisierung und Workflow-Systeme, die Unternehmensdaten, Tools und Entscheidungen kontrolliert verbinden." },
     },
     {
       "@type": "Question",
       name: "Fuer welche Unternehmen ist CONLYRA geeignet?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text:
-          "CONLYRA richtet sich an Unternehmen in Deutschland, Oesterreich, der Schweiz und Europa, die Prozesse mit AI-Agenten automatisieren und gleichzeitig Kontrolle, Nachvollziehbarkeit und Integrationen behalten wollen.",
-      },
+      acceptedAnswer: { "@type": "Answer", text: "CONLYRA richtet sich an Unternehmen in Deutschland, Oesterreich, der Schweiz und Europa, die Prozesse mit AI-Agenten automatisieren und gleichzeitig Kontrolle, Nachvollziehbarkeit und Integrationen behalten wollen." },
     },
     {
       "@type": "Question",
       name: "Wie startet ein CONLYRA Projekt?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text:
-          "Der Einstieg beginnt mit einem Prozess- und Datencheck. Danach entsteht ein Pilot-Workflow, der messbar zeigt, welche Aufgaben AI-Agenten uebernehmen koennen.",
-      },
+      acceptedAnswer: { "@type": "Answer", text: "Der Einstieg beginnt mit einem Prozess- und Datencheck. Danach entsteht ein Pilot-Workflow, der messbar zeigt, welche Aufgaben AI-Agenten uebernehmen koennen." },
     },
     {
       "@type": "Question",
       name: "Welche Systeme kann CONLYRA verbinden?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text:
-          "CONLYRA kann CRM-, Support-, Wissens-, Datenbank-, API- und interne Tool-Landschaften verbinden, sofern Zugriff und Sicherheitsanforderungen geklaert sind.",
-      },
+      acceptedAnswer: { "@type": "Answer", text: "CONLYRA kann CRM-, Support-, Wissens-, Datenbank-, API- und interne Tool-Landschaften verbinden, sofern Zugriff und Sicherheitsanforderungen geklaert sind." },
     },
   ],
 };
 
 const breadcrumbSchema = {
   "@type": "BreadcrumbList",
-  itemListElement: [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Startseite",
-      item: siteUrl,
-    },
-  ],
+  itemListElement: [{ "@type": "ListItem", position: 1, name: "Startseite", item: siteUrl }],
 };
 
 const pageSchema = {
   "@context": "https://schema.org",
-  "@graph": [
-    organizationSchema,
-    websiteSchema,
-    webPageSchema,
-    softwareSchema,
-    productSystemSchema,
-    serviceCatalogSchema,
-    faqSchema,
-    breadcrumbSchema,
-  ],
+  "@graph": [organizationSchema, websiteSchema, webPageSchema, softwareSchema, productSystemSchema, serviceCatalogSchema, faqSchema, breadcrumbSchema],
 };
 
 export default function Home() {
@@ -226,10 +194,7 @@ export default function Home() {
         <ConlyraSystemMap />
         <ConlyraStoryChapters />
       </main>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }} />
     </>
   );
 }
