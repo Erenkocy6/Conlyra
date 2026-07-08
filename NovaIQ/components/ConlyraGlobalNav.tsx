@@ -13,7 +13,6 @@ const quickLinks = [
   ["AI Readiness", "/ai-strategy"],
   ["System", "/#system"],
   ["Anwendungen", "/#use-cases"],
-  ["Wirkung", "/#impact"],
   ["Kontakt", "/#contact"],
 ] as const;
 
