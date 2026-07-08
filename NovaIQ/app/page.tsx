@@ -1,5 +1,4 @@
-import { ConlyraExperience } from "@/components/ConlyraExperience";
-import { HeroSectionFix } from "@/components/HeroSectionFix";
+import { ConlyraPremierExperience } from "@/components/ConlyraPremierExperience";
 
 const siteUrl = "https://conlyra.ai";
 
@@ -201,8 +200,7 @@ const pageSchema = {
 export default function Home() {
   return (
     <>
-      <ConlyraExperience />
-      <HeroSectionFix />
+      <ConlyraPremierExperience />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
