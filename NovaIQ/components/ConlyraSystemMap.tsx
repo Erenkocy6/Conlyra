@@ -31,7 +31,8 @@ const pathSequence = ["05", "03", "01", "02", "06", "04", "07"] as const;
 
 export function ConlyraSystemMap() {
   const rootRef = useRef<HTMLElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const initialProductIndex = products.findIndex((product) => product.code === pathSequence[0]);
+  const [activeIndex, setActiveIndex] = useState(initialProductIndex);
   const [paused, setPaused] = useState(false);
   const active = products[activeIndex];
 
@@ -54,7 +55,12 @@ export function ConlyraSystemMap() {
   useEffect(() => {
     if (paused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const timer = window.setInterval(() => {
-      setActiveIndex((current) => (current + 1) % products.length);
+      setActiveIndex((current) => {
+        const currentCode = products[current].code;
+        const currentArcIndex = pathSequence.findIndex((code) => code === currentCode);
+        const nextCode = pathSequence[(currentArcIndex + 1) % pathSequence.length];
+        return products.findIndex((product) => product.code === nextCode);
+      });
     }, 4200);
     return () => window.clearInterval(timer);
   }, [paused]);
@@ -62,32 +68,12 @@ export function ConlyraSystemMap() {
   const activePathIndex = useMemo(() => pathSequence.findIndex((code) => code === active.code), [active.code]);
 
   return (
-    <section
-      className={styles.root}
-      id="system-map"
-      ref={rootRef}
-      aria-labelledby="conlyra-system-map-title"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocusCapture={() => setPaused(true)}
-      onBlurCapture={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setPaused(false);
-      }}
-    >
-      <div className={styles.backGrid} aria-hidden="true" />
-      <div className={styles.glow} aria-hidden="true" />
-
+    <section className={styles.root} id="system-map" ref={rootRef} aria-labelledby="conlyra-system-map-title" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocusCapture={() => setPaused(true)} onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setPaused(false); }}>
+      <div className={styles.backGrid} aria-hidden="true" /><div className={styles.glow} aria-hidden="true" />
       <div className={styles.container}>
         <header className={styles.head} data-system-map-reveal>
-          <div>
-            <p>CONLYRA SYSTEM MAP / 07 OF 07 ONLINE</p>
-            <h2 id="conlyra-system-map-title">Sieben Product Worlds.<span>Ein Operating System.</span></h2>
-          </div>
-          <aside>
-            <span>COMPLETE SYSTEM ARC</span>
-            <strong>STRATEGY → CONTEXT → EXECUTION → CONTROL</strong>
-            <small>Wählen Sie einen Node, um das System zu erkunden.</small>
-          </aside>
+          <div><p>CONLYRA SYSTEM MAP / 07 OF 07 ONLINE</p><h2 id="conlyra-system-map-title">Sieben Product Worlds.<span>Ein Operating System.</span></h2></div>
+          <aside><span>COMPLETE SYSTEM ARC</span><strong>STRATEGY → CONTEXT → EXECUTION → CONTROL</strong><small>Wählen Sie einen Node, um das System zu erkunden.</small></aside>
         </header>
 
         <div className={styles.systemShell} data-system-map-reveal>
@@ -96,20 +82,11 @@ export function ConlyraSystemMap() {
             <div className={styles.mapStage}>
               <div className={styles.grid} aria-hidden="true" />
               <svg className={styles.paths} viewBox="0 0 1000 700" preserveAspectRatio="none" aria-hidden="true">
-                <path d="M150 147 C270 150 300 250 500 350" />
-                <path d="M150 518 C285 510 320 420 500 350" />
-                <path d="M340 70 C400 160 430 220 500 350" />
-                <path d="M660 70 C600 160 570 220 500 350" />
-                <path d="M850 147 C730 150 700 250 500 350" />
-                <path d="M850 518 C715 510 680 420 500 350" />
-                <path d="M500 616 C500 530 500 455 500 350" />
-                <path className={styles.orbitPath} d="M150 147 C330 10 670 10 850 147 C980 280 980 470 850 518 C660 700 340 700 150 518 C20 420 20 250 150 147Z" />
+                <path d="M150 147 C270 150 300 250 500 350" /><path d="M150 518 C285 510 320 420 500 350" /><path d="M340 70 C400 160 430 220 500 350" /><path d="M660 70 C600 160 570 220 500 350" /><path d="M850 147 C730 150 700 250 500 350" /><path d="M850 518 C715 510 680 420 500 350" /><path d="M500 616 C500 530 500 455 500 350" /><path className={styles.orbitPath} d="M150 147 C330 10 670 10 850 147 C980 280 980 470 850 518 C660 700 340 700 150 518 C20 420 20 250 150 147Z" />
               </svg>
               <div className={styles.coreNode}><span>CONLYRA</span><strong>OS</strong><small>CONTROLLED INTELLIGENCE</small><i aria-hidden="true" /></div>
               {products.map((product, index) => (
-                <button key={product.code} type="button" className={styles.productNode} data-active={activeIndex === index} style={{ left: `${product.position.x}%`, top: `${product.position.y}%` }} onClick={() => setActiveIndex(index)} onMouseEnter={() => setActiveIndex(index)} aria-pressed={activeIndex === index} aria-label={`${product.name} auswählen`}>
-                  <small>{product.code}</small><strong>{product.name}</strong><span>{product.label}</span><i aria-hidden="true" />
-                </button>
+                <button key={product.code} type="button" className={styles.productNode} data-active={activeIndex === index} style={{ left: `${product.position.x}%`, top: `${product.position.y}%` }} onClick={() => setActiveIndex(index)} onMouseEnter={() => setActiveIndex(index)} aria-pressed={activeIndex === index} aria-label={`${product.name} auswählen`}><small>{product.code}</small><strong>{product.name}</strong><span>{product.label}</span><i aria-hidden="true" /></button>
               ))}
               <div className={styles.activeSignal} key={active.code} aria-hidden="true"><span>{active.code}</span><strong>{active.signal}</strong></div>
             </div>
@@ -118,19 +95,8 @@ export function ConlyraSystemMap() {
 
           <aside className={styles.previewPanel}>
             <header><span>ACTIVE PRODUCT WORLD</span><strong>{active.code} / 07</strong></header>
-            <div className={styles.previewCore} key={active.code}>
-              <small>{active.label}</small><h3>{active.name}</h3><p>{active.description}</p>
-              <div className={styles.questionBlock}><span>SYSTEM QUESTION</span><strong>{active.question}</strong></div>
-              <div className={styles.stackBlock}><span>PRODUCT STACK</span><strong>{active.stack}</strong></div>
-            </div>
-            <div className={styles.sequence}>
-              <span>SYSTEM ARC</span>
-              <div>
-                {pathSequence.map((code, index) => (
-                  <button key={code} type="button" data-active={activePathIndex === index} onClick={() => setActiveIndex(products.findIndex((product) => product.code === code))} aria-label={`Product ${code} auswählen`}>{code}</button>
-                ))}
-              </div>
-            </div>
+            <div className={styles.previewCore} key={active.code}><small>{active.label}</small><h3>{active.name}</h3><p>{active.description}</p><div className={styles.questionBlock}><span>SYSTEM QUESTION</span><strong>{active.question}</strong></div><div className={styles.stackBlock}><span>PRODUCT STACK</span><strong>{active.stack}</strong></div></div>
+            <div className={styles.sequence}><span>SYSTEM ARC</span><div>{pathSequence.map((code, index) => (<button key={code} type="button" data-active={activePathIndex === index} onClick={() => setActiveIndex(products.findIndex((product) => product.code === code))} aria-label={`Product ${code} auswählen`}>{code}</button>))}</div></div>
             <Link href={active.href} className={styles.openProduct}><span>{active.command}</span><b>OPEN PRODUCT ↗</b></Link>
           </aside>
         </div>
@@ -138,15 +104,10 @@ export function ConlyraSystemMap() {
         <div className={styles.systemArc} data-system-map-reveal>
           {pathSequence.map((code, index) => {
             const product = products.find((item) => item.code === code)!;
-            return (
-              <button type="button" key={product.code} data-active={active.code === product.code} onClick={() => setActiveIndex(products.findIndex((item) => item.code === product.code))}>
-                <small>{String(index + 1).padStart(2, "0")}</small><span>{product.question}</span><strong>{product.name}</strong><i aria-hidden="true">→</i>
-              </button>
-            );
+            return <button type="button" key={product.code} data-active={active.code === product.code} onClick={() => setActiveIndex(products.findIndex((item) => item.code === product.code))}><small>{String(index + 1).padStart(2, "0")}</small><span>{product.question}</span><strong>{product.name}</strong><i aria-hidden="true">→</i></button>;
           })}
         </div>
       </div>
-
       <div className={styles.rail}><span>CONLYRA SYSTEM MAP / COMPLETE</span><span>07 PRODUCTS / 01 OPERATING SYSTEM</span></div>
     </section>
   );
