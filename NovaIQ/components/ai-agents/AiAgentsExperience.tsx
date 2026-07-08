@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import styles from "./AiAgentsExperience.module.css";
-import "./AiAgentsDirectorCut.module.css";
+import directorStyles from "./AiAgentsDirectorCut.module.css";
 
 const manifestoWords =
   "Ein Agent ist kein Prompt sondern ein System aus Rolle Kontext Werkzeugen Grenzen Freigaben und einer sichtbaren Spur".split(" ");
@@ -229,7 +229,7 @@ export function AiAgentsExperience() {
   const approveDemo = () => setDemoState("approved");
 
   return (
-    <div className={styles.root} ref={rootRef} data-ai-agents-experience>
+    <div className={`${styles.root} ${directorStyles.directorCut}`} ref={rootRef} data-ai-agents-experience>
       <section className={styles.hero} data-aa-hero aria-labelledby="aa-hero-title">
         <div className={styles.heroMedia} aria-hidden="true">
           <video autoPlay muted loop playsInline preload="auto">
