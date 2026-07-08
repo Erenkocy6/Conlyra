@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SubpageVideoChapters } from "@/components/cinematic/SubpageVideoChapters";
 import { WorkflowExperience } from "@/components/workflow/WorkflowExperience";
 
 export const metadata: Metadata = {
@@ -37,6 +38,7 @@ export default function WorkflowAutomationPage() {
     <>
       <main id="main">
         <WorkflowExperience />
+        <SubpageVideoChapters variant="workflow" />
       </main>
       <script
         type="application/ld+json"
