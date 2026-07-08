@@ -16,7 +16,7 @@ const systems: SystemItem[] = [
   { code: "03", label: "PRIVATE INTELLIGENCE", state: "ONLINE", commandCode: "03" },
   { code: "04", label: "VOICE", state: "ONLINE", commandCode: "04" },
   { code: "05", label: "AI READINESS", state: "ONLINE", commandCode: "05" },
-  { code: "06", label: "INTEGRATIONS", state: "PLANNED" },
+  { code: "06", label: "INTEGRATIONS", state: "ONLINE", commandCode: "06" },
   { code: "07", label: "CONTROL LAYER", state: "PLANNED" },
 ];
 
