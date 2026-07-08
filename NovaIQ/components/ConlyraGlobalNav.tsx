@@ -20,7 +20,7 @@ const systemLinks = [
   ["Private Intelligence", "/private-intelligence"],
   ["Voice AI", "/voice-ai"],
   ["AI Readiness", "/ai-strategy"],
-  ["Integrationen", "/#integrations"],
+  ["Integrationen", "/integrationen"],
   ["Workflow Audit", "/#contact"],
   ["Datenschutz", "/datenschutz"],
   ["Impressum", "/impressum"],
