@@ -9,7 +9,7 @@ export function ConlyraMegaFooter() {
     <footer className={styles.footer} data-conlyra-mega-footer>
       <div className={styles.inner}>
         <div className={styles.topline}>
-          <a className={styles.brand} href="#director-top" aria-label="Zur CONLYRA Startseite">
+          <a className={styles.brand} href="/" aria-label="Zur CONLYRA Startseite">
             <img src="/conlyra-logo.svg" alt="CONLYRA" />
           </a>
 
@@ -17,7 +17,7 @@ export function ConlyraMegaFooter() {
             AI-Agenten, private Daten und kontrollierte Workflows — verbunden zu einem System für operative Intelligenz.
           </p>
 
-          <a className={styles.cta} href="#contact">
+          <a className={styles.cta} href="/#contact">
             Workflow starten <Arrow />
           </a>
         </div>
@@ -27,11 +27,12 @@ export function ConlyraMegaFooter() {
         <div className={styles.bottomline}>
           <span>© 2026 CONLYRA</span>
           <nav aria-label="Footer Navigation">
-            <a href="#system">System</a>
-            <a href="#use-cases">Anwendungen</a>
-            <a href="#impact">Wirkung</a>
-            <a href="#trust">Vertrauen</a>
-            <a href="#contact">Kontakt</a>
+            <a href="/ai-agenten">AI-Agenten</a>
+            <a href="/#system">System</a>
+            <a href="/#use-cases">Anwendungen</a>
+            <a href="/#impact">Wirkung</a>
+            <a href="/#trust">Vertrauen</a>
+            <a href="/#contact">Kontakt</a>
           </nav>
           <span>GERMANY / DACH / EUROPE</span>
         </div>
