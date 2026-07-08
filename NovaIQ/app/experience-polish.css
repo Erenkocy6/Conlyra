@@ -3,14 +3,18 @@
    Signature scroll timing, OS sticky stability and film pacing.
    ========================================================= */
 
-/* Safety net: the original homepage Director nav must always win,
-   even after a client-side transition from a subpage whose CSS is cached. */
+/* Route safety: each route owns exactly one navigation component.
+   These selectors only neutralize stale route CSS after client-side transitions. */
 html body [data-conlyra-director-nav] {
   display: flex !important;
 }
 
 html body [data-conlyra-director-nav] + div {
   display: grid !important;
+}
+
+html body [data-conlyra-global-nav] {
+  display: flex !important;
 }
 
 /* Manifesto: no dead tail after the reveal. */
