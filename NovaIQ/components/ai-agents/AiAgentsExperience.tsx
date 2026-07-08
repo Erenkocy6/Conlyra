@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import styles from "./AiAgentsExperience.module.css";
+import "./AiAgentsDirectorCut.module.css";
 
 const manifestoWords =
   "Ein Agent ist kein Prompt sondern ein System aus Rolle Kontext Werkzeugen Grenzen Freigaben und einer sichtbaren Spur".split(" ");
@@ -57,9 +58,10 @@ const demoSteps = [
   ["01", "SIGNAL", "Neue Anfrage erkannt", "inbound_request"],
   ["02", "CONTEXT", "CRM und Unternehmenswissen geladen", "context_verified"],
   ["03", "DECISION", "Priorität HIGH vorgeschlagen", "confidence_0.91"],
-  ["04", "POLICY", "Externer Versand benötigt Freigabe", "approval_required"],
-  ["05", "ACTION", "Follow-up und CRM-Update vorbereitet", "action_prepared"],
-  ["06", "TRACE", "Entscheidung und Quellen protokolliert", "trace_complete"],
+  ["04", "POLICY", "Externer Versand erfordert Kontrolle", "approval_required"],
+  ["05", "HUMAN GATE", "Aktion wartet auf Freigabe", "human_review_pending"],
+  ["06", "ACTION", "Follow-up und CRM-Update ausgeführt", "action_executed"],
+  ["07", "TRACE", "Entscheidung und Quellen protokolliert", "trace_complete"],
 ] as const;
 
 function Arrow() {
@@ -82,21 +84,37 @@ export function AiAgentsExperience() {
     const timer = window.setInterval(() => {
       setDemoStep((current) => {
         const next = current + 1;
-        if (next >= 4) {
+        if (next >= 5) {
           window.clearInterval(timer);
           setDemoState("approval");
-          return 3;
+          return 4;
         }
         return next;
       });
-    }, 850);
+    }, 760);
 
     return () => window.clearInterval(timer);
   }, [demoState]);
 
   useEffect(() => {
+    if (demoState !== "approved") return;
+
+    setDemoStep(5);
+    const timer = window.setTimeout(() => setDemoStep(demoSteps.length - 1), 680);
+    return () => window.clearTimeout(timer);
+  }, [demoState]);
+
+  useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reducedMotion) {
+      root.querySelectorAll<HTMLElement>("[data-aa-word]").forEach((word) => {
+        word.style.setProperty("--aa-fill", "100%");
+      });
+      return;
+    }
 
     let disposed = false;
     let cleanup: () => void = () => {};
@@ -132,6 +150,7 @@ export function AiAgentsExperience() {
             start: "top top",
             end: "bottom bottom",
             scrub: 0.75,
+            invalidateOnRefresh: true,
             onUpdate: (self) => {
               const total = words.length;
               words.forEach((word, index) => {
@@ -143,7 +162,7 @@ export function AiAgentsExperience() {
         }
 
         const system = root.querySelector<HTMLElement>("[data-agent-system]");
-        if (system && window.matchMedia("(min-width: 901px)").matches) {
+        if (system && window.matchMedia("(min-width: 1101px)").matches) {
           ScrollTrigger.create({
             trigger: system,
             start: "top top",
@@ -172,7 +191,8 @@ export function AiAgentsExperience() {
   useEffect(() => {
     const preview = previewRef.current;
     const section = rootRef.current?.querySelector<HTMLElement>("[data-agent-index]");
-    if (!preview || !section) return;
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (!preview || !section || !finePointer) return;
 
     let disposed = false;
     let cleanup: () => void = () => {};
@@ -206,16 +226,13 @@ export function AiAgentsExperience() {
     setDemoState("running");
   };
 
-  const approveDemo = () => {
-    setDemoState("approved");
-    setDemoStep(demoSteps.length - 1);
-  };
+  const approveDemo = () => setDemoState("approved");
 
   return (
-    <div className={styles.root} ref={rootRef}>
-      <section className={styles.hero} aria-labelledby="aa-hero-title">
+    <div className={styles.root} ref={rootRef} data-ai-agents-experience>
+      <section className={styles.hero} data-aa-hero aria-labelledby="aa-hero-title">
         <div className={styles.heroMedia} aria-hidden="true">
-          <video autoPlay muted loop playsInline preload="metadata">
+          <video autoPlay muted loop playsInline preload="auto">
             <source src="/media/AdobeStock_517331471.mp4" type="video/mp4" />
           </video>
         </div>
@@ -338,8 +355,8 @@ export function AiAgentsExperience() {
             <span>Frontend simulation / no live customer data.</span>
           </div>
 
-          <div className={styles.demo} data-aa-reveal>
-            <div className={styles.demoTop}><span>AGENT RUN / 7F2A</span><strong data-state={demoState}>{demoState.toUpperCase()}</strong></div>
+          <div className={styles.demo} data-aa-reveal data-live-demo>
+            <div className={styles.demoTop}><span>AGENT RUN / 7F2A</span><strong data-state={demoState} aria-live="polite">{demoState.toUpperCase()}</strong></div>
             <div className={styles.demoGrid}>
               <aside>
                 <small>MISSION</small>
@@ -350,36 +367,36 @@ export function AiAgentsExperience() {
                 {demoSteps.map(([no, label, title, code], index) => {
                   const activeStep = demoStep >= index;
                   return (
-                    <div key={no} data-active={activeStep} data-current={demoStep === index}>
+                    <div key={no} data-demo-step data-active={activeStep} data-current={demoStep === index}>
                       <small>{no}</small><span>{label}</span><strong>{title}</strong><code>{code}</code><i>{activeStep ? "✓" : "—"}</i>
                     </div>
                   );
                 })}
               </div>
             </div>
-            <div className={styles.approval} data-state={demoState}>
-              <div><span>HUMAN GATE</span><strong>{demoState === "approval" ? "ACTION WAITING FOR APPROVAL" : demoState === "approved" ? "APPROVED / TRACE COMPLETE" : demoState === "rejected" ? "REJECTED / NO ACTION" : "WAITING FOR AGENT RUN"}</strong></div>
+            <div className={styles.approval} data-approval-gate data-state={demoState}>
+              <div><span>HUMAN GATE</span><strong aria-live="polite">{demoState === "approval" ? "ACTION WAITING FOR APPROVAL" : demoState === "approved" ? "APPROVED / ACTION EXECUTED" : demoState === "rejected" ? "REJECTED / NO ACTION" : "WAITING FOR AGENT RUN"}</strong></div>
               <div><button type="button" disabled={demoState !== "approval"} onClick={() => setDemoState("rejected")}>REJECT</button><button type="button" disabled={demoState !== "approval"} onClick={approveDemo}>APPROVE <Arrow /></button></div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className={styles.control} id="control" aria-labelledby="control-title">
+      <section className={styles.control} id="control" data-aa-control aria-labelledby="control-title">
         <div className={styles.controlMedia} aria-hidden="true"><video autoPlay muted loop playsInline preload="none"><source src="/media/AdobeStock_1499424979.mp4" type="video/mp4" /></video></div>
         <div className={styles.controlShade} aria-hidden="true" />
         <div className={styles.controlContent}>
           <p>CONTROL BY DESIGN</p>
           <h2 id="control-title">Autonomie endet dort, wo Verantwortung beginnt.</h2>
           <div className={styles.controlRows}>
-            <div><small>01</small><strong>LOW RISK</strong><span>CRM-Feld aktualisieren</span><b>AUTO EXECUTE</b></div>
-            <div><small>02</small><strong>MEDIUM RISK</strong><span>Externes Follow-up senden</span><b>HUMAN APPROVAL</b></div>
-            <div><small>03</small><strong>HIGH RISK</strong><span>Preis oder Vertrag ändern</span><b>BLOCK / ESCALATE</b></div>
+            <div data-risk-row><small>01</small><strong>LOW RISK</strong><span>CRM-Feld aktualisieren</span><b>AUTO EXECUTE</b></div>
+            <div data-risk-row><small>02</small><strong>MEDIUM RISK</strong><span>Externes Follow-up senden</span><b>HUMAN APPROVAL</b></div>
+            <div data-risk-row><small>03</small><strong>HIGH RISK</strong><span>Preis oder Vertrag ändern</span><b>BLOCK / ESCALATE</b></div>
           </div>
         </div>
       </section>
 
-      <section className={styles.trace} aria-labelledby="trace-title">
+      <section className={styles.trace} data-agent-trace aria-labelledby="trace-title">
         <div className={styles.container}>
           <div className={styles.sectionHead} data-aa-reveal>
             <p>AGENT TRACE</p>
@@ -387,7 +404,7 @@ export function AiAgentsExperience() {
             <span>Context, decision, policy and action remain visible.</span>
           </div>
 
-          <div className={styles.traceConsole} data-aa-reveal>
+          <div className={styles.traceConsole} data-aa-reveal data-trace-console>
             <div className={styles.traceTop}><span>TRACE / RUN 7F2A</span><strong><i /> LIVE OBSERVABILITY</strong></div>
             {[
               ["14:32:08.114", "signal.received", "inbound_request / web_form"],
@@ -404,7 +421,7 @@ export function AiAgentsExperience() {
         </div>
       </section>
 
-      <section className={styles.finalScene} aria-labelledby="final-title">
+      <section className={styles.finalScene} data-aa-final aria-labelledby="final-title">
         <div className={styles.finalMedia} aria-hidden="true"><video autoPlay muted loop playsInline preload="none"><source src="/media/AdobeStock_534758496.mp4" type="video/mp4" /></video></div>
         <div className={styles.finalShade} aria-hidden="true" />
         <div className={styles.finalContent}>
