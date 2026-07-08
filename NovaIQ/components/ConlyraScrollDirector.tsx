@@ -15,6 +15,12 @@ export function ConlyraScrollDirector() {
         import("gsap/ScrollTrigger"),
       ]);
 
+      await new Promise<void>((resolve) => {
+        window.requestAnimationFrame(() => {
+          window.requestAnimationFrame(() => resolve());
+        });
+      });
+
       if (disposed) return;
       gsap.registerPlugin(ScrollTrigger);
 
