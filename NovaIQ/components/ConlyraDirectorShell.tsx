@@ -1,21 +1,36 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { CSSProperties } from "react";
 import styles from "./ConlyraDirectorShell.module.css";
-
-const navItems = [
-  ["System", "#system"],
-  ["Anwendungen", "#use-cases"],
-  ["Wirkung", "#impact"],
-  ["Vertrauen", "#trust"],
-  ["Kontakt", "#contact"],
-];
 
 const manifestoWords =
   "Verbinden Sie Daten Tools und Teams mit KI-Agenten die Kontext verstehen Entscheidungen vorbereiten und Arbeit kontrolliert ausführen".split(
     " ",
   );
+
+const heroCapabilities = [
+  ["01", "AI Strategy", "#system"],
+  ["02", "Custom Agents", "#system"],
+  ["03", "Workflow Systems", "#use-cases"],
+  ["04", "Private Intelligence", "#trust"],
+] as const;
+
+const quickLinks = [
+  ["Home", "#director-top"],
+  ["System", "#system"],
+  ["Anwendungen", "#use-cases"],
+  ["Wirkung", "#impact"],
+  ["Integrationen", "#integrations"],
+  ["Kontakt", "#contact"],
+] as const;
+
+const systemLinks = [
+  ["Über CONLYRA", "#director-manifesto"],
+  ["Demo buchen", "#contact"],
+  ["Datenschutz", "/datenschutz"],
+  ["Impressum", "/impressum"],
+  ["Workflow Audit", "#contact"],
+] as const;
 
 const hoverReels = [
   {
@@ -46,7 +61,7 @@ const hoverReels = [
     meta: "Search / RAG / Private Context",
     video: "/media/AdobeStock_1525614966.mp4",
   },
-];
+] as const;
 
 function Arrow() {
   return <span aria-hidden="true">↗</span>;
@@ -55,45 +70,26 @@ function Arrow() {
 export function ConlyraDirectorShell() {
   const shellRef = useRef<HTMLDivElement>(null);
   const previewRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("system");
   const [activeReel, setActiveReel] = useState(0);
   const [previewVisible, setPreviewVisible] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
-    let frame = 0;
-    const onScroll = () => {
-      if (frame) return;
-      frame = window.requestAnimationFrame(() => {
-        frame = 0;
-        const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-        setScrollProgress(Math.min(1, Math.max(0, window.scrollY / max)));
+    const html = document.documentElement;
+    html.classList.toggle("conlyra-director-menu-open", menuOpen);
 
-        const sections = ["system", "use-cases", "impact", "trust", "contact"];
-        let current = sections[0];
-        sections.forEach((id) => {
-          const section = document.getElementById(id);
-          if (section && section.getBoundingClientRect().top <= window.innerHeight * 0.42) {
-            current = id;
-          }
-        });
-        setActiveSection(current);
-      });
-    };
+    if (menuOpen) {
+      const closeOnEscape = (event: KeyboardEvent) => {
+        if (event.key === "Escape") setMenuOpen(false);
+      };
+      window.addEventListener("keydown", closeOnEscape);
+      return () => {
+        html.classList.remove("conlyra-director-menu-open");
+        window.removeEventListener("keydown", closeOnEscape);
+      };
+    }
 
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      if (frame) window.cancelAnimationFrame(frame);
-    };
-  }, []);
-
-  useEffect(() => {
-    document.documentElement.classList.toggle("conlyra-director-menu-open", menuOpen);
-    return () => document.documentElement.classList.remove("conlyra-director-menu-open");
+    return () => html.classList.remove("conlyra-director-menu-open");
   }, [menuOpen]);
 
   useEffect(() => {
@@ -173,36 +169,13 @@ export function ConlyraDirectorShell() {
     };
   }, []);
 
-  const activateReel = (index: number) => {
-    setActiveReel(index);
-    setPreviewVisible(true);
-  };
+  const closeMenuAndNavigate = () => setMenuOpen(false);
 
   return (
     <div className={styles.shell} ref={shellRef}>
-      <header
-        className={styles.nav}
-        data-conlyra-director-nav
-        style={{ "--director-progress": scrollProgress } as CSSProperties}
-      >
+      <header className={styles.nav} data-conlyra-director-nav>
         <a className={styles.brand} href="#director-top" aria-label="CONLYRA Startseite">
-          <img src="/conlyra-logo.svg" alt="" aria-hidden="true" />
-          <strong>CONLYRA</strong>
-        </a>
-
-        <nav className={styles.navLinks} aria-label="Hauptnavigation">
-          {navItems.map(([label, href]) => {
-            const id = href.slice(1);
-            return (
-              <a className={activeSection === id ? styles.navActive : ""} href={href} key={href}>
-                {label}
-              </a>
-            );
-          })}
-        </nav>
-
-        <a className={styles.navCta} href="#contact">
-          Demo <Arrow />
+          <img src="/conlyra-logo.svg" alt="CONLYRA" />
         </a>
 
         <button
@@ -214,50 +187,81 @@ export function ConlyraDirectorShell() {
         >
           <span />
           <span />
+          <span />
         </button>
-
-        <i className={styles.navProgress} aria-hidden="true" />
       </header>
 
       <div className={`${styles.menu} ${menuOpen ? styles.menuOpen : ""}`} aria-hidden={!menuOpen}>
-        <div className={styles.menuVisual}>
-          <video autoPlay loop muted playsInline preload="metadata">
+        <section className={styles.menuLeft} aria-label="CONLYRA Menü Intro">
+          <video autoPlay loop muted playsInline preload="metadata" aria-hidden="true">
             <source src="/media/AdobeStock_1499424979.mp4" type="video/mp4" />
           </video>
-          <div className={styles.menuVisualCopy}>
-            <span>CONLYRA / 2026</span>
-            <h2>Private AI agents across the work that slows teams down.</h2>
-          </div>
-        </div>
+          <div className={styles.menuLeftShade} aria-hidden="true" />
 
-        <div className={styles.menuLinksPanel}>
-          <button className={styles.menuClose} type="button" aria-label="Menü schließen" onClick={() => setMenuOpen(false)}>
-            <span />
-            <span />
-          </button>
-          <small>QUICK LINKS</small>
-          <nav>
-            {navItems.map(([label, href], index) => (
-              <a href={href} key={href} onClick={() => setMenuOpen(false)}>
-                <span>0{index + 1}</span>
-                <strong>{label}</strong>
-                <Arrow />
-              </a>
-            ))}
-          </nav>
-          <div className={styles.menuMeta}>
-            <span>AI AGENTS</span>
-            <span>WORKFLOW SYSTEMS</span>
-            <span>PRIVATE INTELLIGENCE</span>
-          </div>
-        </div>
+          <a className={styles.menuBrand} href="#director-top" onClick={closeMenuAndNavigate}>
+            <img src="/conlyra-logo.svg" alt="CONLYRA" />
+          </a>
 
-        <div className={styles.menuPreview}>
-          <video autoPlay loop muted playsInline preload="metadata">
-            <source src="/media/AdobeStock_444039087.mp4" type="video/mp4" />
-          </video>
-          <div><span>LIVE PREVIEW</span><strong>CONTROLLED EXECUTION</strong></div>
-        </div>
+          <div className={styles.menuEditorial}>
+            <p><span>CONLYRA</span> / MENU / 2026</p>
+            <h2>Verbinden Sie Daten, Tools und Workflows zu kontrollierter Intelligenz<span>.</span></h2>
+          </div>
+
+          <div className={styles.menuSystemMeta}>
+            <div><i /><span>SYSTEM ONLINE</span><strong>24 / 7 / 365</strong></div>
+            <div><i /><span>REGION</span><strong>GERMANY / DACH</strong></div>
+            <div><i /><span>STATUS</span><strong>CONTROLLED INTELLIGENCE</strong></div>
+          </div>
+        </section>
+
+        <section className={styles.menuRight} aria-label="CONLYRA Navigation">
+          <div className={styles.menuLinksPanel}>
+            <button className={styles.menuClose} type="button" aria-label="Menü schließen" onClick={() => setMenuOpen(false)}>
+              <span />
+              <span />
+            </button>
+
+            <div className={styles.menuLinkColumns}>
+              <nav aria-label="Quick Links">
+                <small>QUICK LINKS</small>
+                {quickLinks.map(([label, href]) => (
+                  <a href={href} key={label} onClick={closeMenuAndNavigate}>
+                    <span>{label}</span><Arrow />
+                  </a>
+                ))}
+              </nav>
+
+              <nav aria-label="System Links">
+                <small>SYSTEM LINKS</small>
+                {systemLinks.map(([label, href]) => (
+                  <a href={href} key={label} onClick={closeMenuAndNavigate}>
+                    <span>{label}</span><Arrow />
+                  </a>
+                ))}
+              </nav>
+            </div>
+
+            <div className={styles.menuCtaLine}>
+              <span>BEREIT FÜR DEN NÄCHSTEN SCHRITT?</span>
+              <a href="#contact" onClick={closeMenuAndNavigate}>Demo anfordern <Arrow /></a>
+            </div>
+          </div>
+
+          <a className={styles.menuVideoPanel} href="#system" onClick={closeMenuAndNavigate}>
+            <video autoPlay loop muted playsInline preload="metadata" aria-hidden="true">
+              <source src="/media/AdobeStock_517331471.mp4" type="video/mp4" />
+            </video>
+            <div className={styles.menuVideoShade} aria-hidden="true" />
+            <div className={styles.menuVideoTopline}>
+              <span>CONLYRA SYSTEMS</span>
+              <strong>CORE INFRASTRUCTURE</strong>
+            </div>
+            <div className={styles.menuVideoFooter}>
+              <div><i>▶</i><span>SYSTEM OVERVIEW</span><strong>00:18</strong></div>
+              <div><span>VIDEO ABSPIELEN</span><Arrow /></div>
+            </div>
+          </a>
+        </section>
       </div>
 
       <section className={styles.hero} id="director-top" aria-labelledby="director-hero-title">
@@ -269,28 +273,51 @@ export function ConlyraDirectorShell() {
         <div className={styles.heroOverlay} aria-hidden="true" />
         <div className={styles.heroGrid} aria-hidden="true" />
 
-        <div className={styles.heroInner}>
-          <p className={styles.heroKicker}>PRIVATE KI-AGENTEN / WORKFLOW OS</p>
-          <h1 id="director-hero-title">
-            <span>KI-Agenten einsetzen.</span>
-            <span>Prozesse skalieren.</span>
-          </h1>
-          <p className={styles.heroSubline}>
-            CONLYRA verbindet Daten, Tools und Teams zu kontrollierten Workflows mit messbarem Output.
-          </p>
-          <div className={styles.heroActions}>
-            <a className={styles.heroPrimary} href="#contact">Demo starten <Arrow /></a>
-            <a className={styles.heroSecondary} href="#system">Produkt ansehen <Arrow /></a>
+        <div className={styles.heroLayout}>
+          <div className={styles.heroCopy}>
+            <p className={styles.heroKicker}>CONLYRA / AI SYSTEMS</p>
+            <h1 id="director-hero-title">
+              <span>KI-Agenten einsetzen.</span>
+              <span>Prozesse skalieren.</span>
+            </h1>
+            <p className={styles.heroSubline}>
+              Intelligente Workflows, autonome Agenten und private Daten — sicher orchestriert, kontrollierbar und messbar im Geschäftsbetrieb.
+            </p>
+            <a className={styles.heroPrimary} href="#contact">
+              <span><Arrow /></span>
+              Workflow starten
+            </a>
           </div>
+
+          <nav className={styles.heroCapabilities} aria-label="CONLYRA Leistungen">
+            {heroCapabilities.map(([no, label, href]) => (
+              <a href={href} key={no}>
+                <small>{no}</small>
+                <i />
+                <span>{label}</span>
+              </a>
+            ))}
+          </nav>
         </div>
 
-        <div className={styles.heroRail} aria-hidden="true">
-          <span>AI SYSTEMS / DACH</span>
-          <span>SCROLL TO EXPLORE ↓</span>
+        <div className={styles.heroScroll} aria-hidden="true">
+          <span>SCROLL</span>
+          <i />
+        </div>
+
+        <div className={styles.heroSystemMeta} aria-hidden="true">
+          <span>SYS&nbsp;&nbsp;CONLYRA-OS 1.0</span>
+          <span>SEC&nbsp;&nbsp;PRIVATE INFRASTRUCTURE</span>
+          <span>REG&nbsp;&nbsp;DACH / EUROPE</span>
         </div>
       </section>
 
-      <section className={styles.manifesto} data-director-manifesto aria-labelledby="director-manifesto-title">
+      <section
+        className={styles.manifesto}
+        id="director-manifesto"
+        data-director-manifesto
+        aria-labelledby="director-manifesto-title"
+      >
         <div className={styles.manifestoSticky}>
           <p>THE OPERATING SHIFT</p>
           <h2 id="director-manifesto-title">
@@ -325,8 +352,14 @@ export function ConlyraDirectorShell() {
               href="#system"
               className={index === activeReel ? styles.reelActive : ""}
               key={item.no}
-              onPointerEnter={() => activateReel(index)}
-              onFocus={() => activateReel(index)}
+              onPointerEnter={() => {
+                setActiveReel(index);
+                setPreviewVisible(true);
+              }}
+              onFocus={() => {
+                setActiveReel(index);
+                setPreviewVisible(true);
+              }}
             >
               <small>{item.no}</small>
               <div><strong>{item.label}</strong><span>{item.meta}</span></div>
@@ -341,7 +374,7 @@ export function ConlyraDirectorShell() {
           ref={previewRef}
           aria-hidden="true"
         >
-          <video key={hoverReels[activeReel].video} ref={videoRef} autoPlay muted loop playsInline preload="metadata">
+          <video key={hoverReels[activeReel].video} autoPlay muted loop playsInline preload="metadata">
             <source src={hoverReels[activeReel].video} type="video/mp4" />
           </video>
           <div><span>{hoverReels[activeReel].label}</span><strong>CONLYRA / 0{activeReel + 1}</strong></div>
