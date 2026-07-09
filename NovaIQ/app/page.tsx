@@ -1,6 +1,7 @@
 import { ConlyraDirectorShell } from "@/components/ConlyraDirectorShell";
 import { ConlyraOperatingSystem } from "@/components/ConlyraOperatingSystem";
 import { ConlyraStoryChapters } from "@/components/ConlyraStoryChapters";
+import { ConlyraSystemMap } from "@/components/ConlyraSystemMap";
 
 const siteUrl = "https://conlyra.ai";
 
@@ -19,9 +20,7 @@ const softwareSchema = {
     priceCurrency: "EUR",
     description: "CONLYRA Workflow-Beratung anfragen.",
   },
-  provider: {
-    "@id": `${siteUrl}/#organization`,
-  },
+  provider: { "@id": `${siteUrl}/#organization` },
 };
 
 const organizationSchema = {
@@ -48,6 +47,9 @@ const organizationSchema = {
     "Enterprise AI Systems",
     "Datenintelligenz",
     "Prozessautomatisierung",
+    "AI Readiness",
+    "AI Integrationen",
+    "AI Governance",
   ],
 };
 
@@ -59,9 +61,7 @@ const websiteSchema = {
   inLanguage: "de-DE",
   description:
     "CONLYRA ist eine premium AI-SaaS-Plattform fuer individuelle AI-Workflows, Agentenautomatisierung und intelligente Systeminfrastruktur.",
-  publisher: {
-    "@id": `${siteUrl}/#organization`,
-  },
+  publisher: { "@id": `${siteUrl}/#organization` },
 };
 
 const webPageSchema = {
@@ -71,20 +71,37 @@ const webPageSchema = {
   name: "CONLYRA - AI-Agenten und KI-Automatisierung fuer Unternehmen",
   headline: "AI-Agenten und kontrollierte Workflow-Systeme fuer Unternehmen",
   inLanguage: "de-DE",
-  isPartOf: {
-    "@id": `${siteUrl}/#website`,
-  },
-  about: {
-    "@id": `${siteUrl}/#organization`,
-  },
+  isPartOf: { "@id": `${siteUrl}/#website` },
+  about: { "@id": `${siteUrl}/#organization` },
   audience: {
     "@type": "BusinessAudience",
     audienceType: "Unternehmen, Teams und Entscheider fuer KI-Automatisierung",
   },
   mainEntity: [
     { "@id": `${siteUrl}/#services` },
+    { "@id": `${siteUrl}/#product-system` },
     { "@id": `${siteUrl}/#faq` },
   ],
+};
+
+const productSystemSchema = {
+  "@type": "ItemList",
+  "@id": `${siteUrl}/#product-system`,
+  name: "CONLYRA Product System",
+  itemListElement: [
+    ["AI Agents", "/ai-agenten"],
+    ["Workflow Automation", "/workflow-automatisierung"],
+    ["Private Intelligence", "/private-intelligence"],
+    ["Voice AI", "/voice-ai"],
+    ["AI Readiness", "/ai-strategy"],
+    ["Integrations", "/integrationen"],
+    ["Control Layer", "/governance-security"],
+  ].map(([name, path], index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name,
+    url: `${siteUrl}${path}`,
+  })),
 };
 
 const serviceCatalogSchema = {
@@ -138,65 +155,34 @@ const faqSchema = {
     {
       "@type": "Question",
       name: "Was macht CONLYRA?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text:
-          "CONLYRA baut AI-Agenten, KI-Automatisierung und Workflow-Systeme, die Unternehmensdaten, Tools und Entscheidungen kontrolliert verbinden.",
-      },
+      acceptedAnswer: { "@type": "Answer", text: "CONLYRA baut AI-Agenten, KI-Automatisierung und Workflow-Systeme, die Unternehmensdaten, Tools und Entscheidungen kontrolliert verbinden." },
     },
     {
       "@type": "Question",
       name: "Fuer welche Unternehmen ist CONLYRA geeignet?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text:
-          "CONLYRA richtet sich an Unternehmen in Deutschland, Oesterreich, der Schweiz und Europa, die Prozesse mit AI-Agenten automatisieren und gleichzeitig Kontrolle, Nachvollziehbarkeit und Integrationen behalten wollen.",
-      },
+      acceptedAnswer: { "@type": "Answer", text: "CONLYRA richtet sich an Unternehmen in Deutschland, Oesterreich, der Schweiz und Europa, die Prozesse mit AI-Agenten automatisieren und gleichzeitig Kontrolle, Nachvollziehbarkeit und Integrationen behalten wollen." },
     },
     {
       "@type": "Question",
       name: "Wie startet ein CONLYRA Projekt?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text:
-          "Der Einstieg beginnt mit einem Prozess- und Datencheck. Danach entsteht ein Pilot-Workflow, der messbar zeigt, welche Aufgaben AI-Agenten uebernehmen koennen.",
-      },
+      acceptedAnswer: { "@type": "Answer", text: "Der Einstieg beginnt mit einem Prozess- und Datencheck. Danach entsteht ein Pilot-Workflow, der messbar zeigt, welche Aufgaben AI-Agenten uebernehmen koennen." },
     },
     {
       "@type": "Question",
       name: "Welche Systeme kann CONLYRA verbinden?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text:
-          "CONLYRA kann CRM-, Support-, Wissens-, Datenbank-, API- und interne Tool-Landschaften verbinden, sofern Zugriff und Sicherheitsanforderungen geklaert sind.",
-      },
+      acceptedAnswer: { "@type": "Answer", text: "CONLYRA kann CRM-, Support-, Wissens-, Datenbank-, API- und interne Tool-Landschaften verbinden, sofern Zugriff und Sicherheitsanforderungen geklaert sind." },
     },
   ],
 };
 
 const breadcrumbSchema = {
   "@type": "BreadcrumbList",
-  itemListElement: [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Startseite",
-      item: siteUrl,
-    },
-  ],
+  itemListElement: [{ "@type": "ListItem", position: 1, name: "Startseite", item: siteUrl }],
 };
 
 const pageSchema = {
   "@context": "https://schema.org",
-  "@graph": [
-    organizationSchema,
-    websiteSchema,
-    webPageSchema,
-    softwareSchema,
-    serviceCatalogSchema,
-    faqSchema,
-    breadcrumbSchema,
-  ],
+  "@graph": [organizationSchema, websiteSchema, webPageSchema, softwareSchema, productSystemSchema, serviceCatalogSchema, faqSchema, breadcrumbSchema],
 };
 
 export default function Home() {
@@ -205,12 +191,10 @@ export default function Home() {
       <main id="main">
         <ConlyraDirectorShell />
         <ConlyraOperatingSystem />
+        <ConlyraSystemMap />
         <ConlyraStoryChapters />
       </main>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }} />
     </>
   );
 }
