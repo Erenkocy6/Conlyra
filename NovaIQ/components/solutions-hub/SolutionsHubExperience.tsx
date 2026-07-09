@@ -12,8 +12,8 @@ const solutions = [
     title: "AI für Vertrieb",
     statement: "Vom ersten Signal bis zum nächsten Sales-Move.",
     copy: "CONLYRA verbindet Lead Intake, Unternehmensrecherche, CRM-Kontext, Qualifizierung, Follow-up und Human Approval zu einem sichtbaren Sales-System.",
-    productHref: "/ai-agenten",
-    productLabel: "AI Agents entdecken",
+    productHref: "/ai-vertrieb",
+    productLabel: "AI Vertrieb entdecken",
     pain: ["Leads werden zu spät bearbeitet", "CRM-Daten bleiben unvollständig", "Follow-ups hängen an manuellen Routinen"],
     stages: ["SIGNAL", "RESEARCH", "CRM CONTEXT", "QUALIFY", "APPROVAL", "FOLLOW-UP"],
     metrics: [
