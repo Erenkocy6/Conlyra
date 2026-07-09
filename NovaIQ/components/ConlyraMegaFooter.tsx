@@ -29,8 +29,8 @@ export function ConlyraMegaFooter() {
           <nav aria-label="Footer Navigation">
             <a href="/loesungen">Lösungen</a>
             <a href="/ai-vertrieb">AI Vertrieb</a>
+            <a href="/ai-kundenservice">AI Kundenservice</a>
             <a href="/ai-agenten">AI-Agenten</a>
-            <a href="/#system">System</a>
             <a href="/#trust">Vertrauen</a>
             <a href="/#contact">Kontakt</a>
           </nav>
