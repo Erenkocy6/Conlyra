@@ -27,10 +27,10 @@ export function ConlyraMegaFooter() {
         <div className={styles.bottomline}>
           <span>© 2026 CONLYRA</span>
           <nav aria-label="Footer Navigation">
+            <a href="/loesungen">Lösungen</a>
             <a href="/ai-agenten">AI-Agenten</a>
             <a href="/#system">System</a>
             <a href="/#use-cases">Anwendungen</a>
-            <a href="/#impact">Wirkung</a>
             <a href="/#trust">Vertrauen</a>
             <a href="/#contact">Kontakt</a>
           </nav>
