@@ -42,7 +42,7 @@ const pageSchema = {
           position: 1,
           name: "AI für Vertrieb",
           description: "Lead Intake, Research, Qualification, Follow-up und CRM-Automatisierung.",
-          url: "https://conlyra.ai/loesungen#sales",
+          url: "https://conlyra.ai/ai-vertrieb",
         },
         {
           "@type": "ListItem",
