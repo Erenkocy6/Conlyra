@@ -367,10 +367,10 @@
 .actionRows button span { font-size: .66rem; font-weight: 500; }
 .actionRows button b { color: rgba(255,255,255,.3); font-weight: 500; }
 .actionRows button strong { justify-self: end; }
-[data-decision="ALLOW"] { color: var(--lime) !important; }
-[data-decision="APPROVE"] { color: var(--amber) !important; }
-[data-decision="ESCALATE"],
-[data-decision="BLOCK"] { color: var(--danger) !important; }
+.root [data-decision="ALLOW"] { color: var(--lime) !important; }
+.root [data-decision="APPROVE"] { color: var(--amber) !important; }
+.root [data-decision="ESCALATE"],
+.root [data-decision="BLOCK"] { color: var(--danger) !important; }
 
 .decisionPanel { display: grid; grid-template-rows: auto minmax(0,1fr) auto; background: radial-gradient(circle at 70% 25%, rgba(183,255,45,.05), transparent 30%), #060606; }
 .decisionPanel header strong { color: var(--lime); font-size: .48rem; }
