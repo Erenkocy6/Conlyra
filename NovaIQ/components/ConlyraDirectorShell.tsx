@@ -12,7 +12,7 @@ const manifestoWords =
 const heroCapabilities = [
   ["01", "Solutions", "/loesungen"],
   ["02", "AI Vertrieb", "/ai-vertrieb"],
-  ["03", "AI Strategy", "#system"],
+  ["03", "AI Kundenservice", "/ai-kundenservice"],
   ["04", "Custom Agents", "/ai-agenten"],
   ["05", "Workflow Systems", "/workflow-automatisierung"],
   ["06", "Private Intelligence", "/private-intelligence"],
@@ -22,6 +22,7 @@ const quickLinks = [
   ["Home", "#director-top"],
   ["Lösungen", "/loesungen"],
   ["AI Vertrieb", "/ai-vertrieb"],
+  ["AI Kundenservice", "/ai-kundenservice"],
   ["AI-Agenten", "/ai-agenten"],
   ["Workflow-Automatisierung", "/workflow-automatisierung"],
   ["Voice AI", "/voice-ai"],
