@@ -49,7 +49,7 @@ const pageSchema = {
           position: 2,
           name: "AI für Kundenservice",
           description: "Anfragen verstehen, Kontext laden, Antworten vorbereiten und kontrolliert eskalieren.",
-          url: "https://conlyra.ai/loesungen#service",
+          url: "https://conlyra.ai/ai-kundenservice",
         },
         {
           "@type": "ListItem",
