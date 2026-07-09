@@ -33,8 +33,8 @@ const solutions = [
     title: "AI für Kundenservice",
     statement: "Anfragen verstehen. Kontext laden. Sicher lösen.",
     copy: "Voice, E-Mail und Chat werden mit Kundenhistorie, Wissensquellen, Policies und kontrollierten Eskalationen verbunden.",
-    productHref: "/voice-ai",
-    productLabel: "Voice AI entdecken",
+    productHref: "/ai-kundenservice",
+    productLabel: "AI Kundenservice entdecken",
     pain: ["Kontext liegt in mehreren Systemen", "Antwortqualität hängt von Einzelwissen ab", "Eskalationen kommen zu spät"],
     stages: ["REQUEST", "INTENT", "CONTEXT", "KNOWLEDGE", "RESOLUTION", "HANDOFF"],
     metrics: [
