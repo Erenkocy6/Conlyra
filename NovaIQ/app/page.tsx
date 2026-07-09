@@ -1,5 +1,6 @@
 import { ConlyraDirectorShell } from "@/components/ConlyraDirectorShell";
 import { ConlyraOperatingSystem } from "@/components/ConlyraOperatingSystem";
+import { ConlyraOperationsReality } from "@/components/ConlyraOperationsReality";
 import { ConlyraStoryChapters } from "@/components/ConlyraStoryChapters";
 import { ConlyraSystemMap } from "@/components/ConlyraSystemMap";
 
@@ -191,6 +192,7 @@ export default function Home() {
       <main id="main">
         <ConlyraDirectorShell />
         <ConlyraOperatingSystem />
+        <ConlyraOperationsReality />
         <ConlyraSystemMap />
         <ConlyraStoryChapters />
       </main>
