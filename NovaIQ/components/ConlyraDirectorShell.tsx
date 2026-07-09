@@ -10,21 +10,23 @@ const manifestoWords =
   );
 
 const heroCapabilities = [
-  ["01", "AI Strategy", "#system"],
-  ["02", "Custom Agents", "/ai-agenten"],
-  ["03", "Workflow Systems", "/workflow-automatisierung"],
-  ["04", "Private Intelligence", "/private-intelligence"],
+  ["01", "Solutions", "/loesungen"],
+  ["02", "AI Vertrieb", "/ai-vertrieb"],
+  ["03", "AI Strategy", "#system"],
+  ["04", "Custom Agents", "/ai-agenten"],
+  ["05", "Workflow Systems", "/workflow-automatisierung"],
+  ["06", "Private Intelligence", "/private-intelligence"],
 ] as const;
 
 const quickLinks = [
   ["Home", "#director-top"],
+  ["Lösungen", "/loesungen"],
+  ["AI Vertrieb", "/ai-vertrieb"],
   ["AI-Agenten", "/ai-agenten"],
   ["Workflow-Automatisierung", "/workflow-automatisierung"],
+  ["Voice AI", "/voice-ai"],
   ["Private Intelligence", "/private-intelligence"],
-  ["System", "#system"],
-  ["Anwendungen", "#use-cases"],
-  ["Wirkung", "#impact"],
-  ["Integrationen", "#integrations"],
+  ["Integrationen", "/integrationen"],
   ["Kontakt", "#contact"],
 ] as const;
 
@@ -255,18 +257,18 @@ export function ConlyraDirectorShell() {
             </div>
           </div>
 
-          <Link className={styles.menuVideoPanel} href="/ai-agenten" onClick={closeMenuAndNavigate}>
+          <Link className={styles.menuVideoPanel} href="/ai-vertrieb" onClick={closeMenuAndNavigate}>
             <video autoPlay loop muted playsInline preload="metadata" aria-hidden="true">
-              <source src="/media/AdobeStock_517331471.mp4" type="video/mp4" />
+              <source src="/media/AdobeStock_1535809490.mp4" type="video/mp4" />
             </video>
             <div className={styles.menuVideoShade} aria-hidden="true" />
             <div className={styles.menuVideoTopline}>
-              <span>CONLYRA SYSTEMS</span>
-              <strong>AI AGENT SYSTEMS</strong>
+              <span>CONLYRA SOLUTIONS</span>
+              <strong>AI SALES SYSTEMS</strong>
             </div>
             <div className={styles.menuVideoFooter}>
-              <div><i>▶</i><span>PRODUCT CHAPTER</span><strong>ROLE / CONTEXT / CONTROL</strong></div>
-              <div><span>AI-AGENTEN ÖFFNEN</span><Arrow /></div>
+              <div><i>▶</i><span>SOLUTION CHAPTER</span><strong>SIGNAL / CONTEXT / ACTION</strong></div>
+              <div><span>AI VERTRIEB ÖFFNEN</span><Arrow /></div>
             </div>
           </Link>
         </section>
